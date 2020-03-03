@@ -1,4 +1,4 @@
-const double KP = 5;
+const double KP = 4;
 const double KI = 2;
 const double KD = 0.05;
 

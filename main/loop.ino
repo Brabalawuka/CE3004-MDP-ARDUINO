@@ -52,6 +52,8 @@ void loopReading(){
         switch(cmd){
           case 'f':{
             move(convertDistanceToTicks(distance),  DIRECTION_FORWARD);
+            //moveWithSpeed(convertDistanceToTicks(distance),  DIRECTION_FORWARD, 150);
+
             Serial.println("Xdone");
             break;
           }
@@ -77,7 +79,7 @@ void loopReading(){
           case 's':{
             checkRawValues ();
            
-            
+
             break;
           }
 
@@ -89,7 +91,7 @@ void loopReading(){
           }
 
           case 'i':{
-            caliCorner();
+            caliFrontLeft();
              Serial.println("Xdone");
             
             break;
@@ -110,7 +112,7 @@ void loopReading(){
           }
 
           case 'u':{
-            initCali();
+            caliLeftBack();
              Serial.println("Xdone");
             
             break;
