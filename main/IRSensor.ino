@@ -41,7 +41,7 @@ float readIR3() {
     arr[i] = analogRead(irR3);
   }
   float middle = median(arr, 20);
-  return 6103.8367 / middle - 5.8303848;
+  return 6103.8367 / middle - 5.9303848;
 }
 
 
