@@ -43,7 +43,7 @@ int16_t lastError = 0;
 int16_t cumError = 0;
 
 
-const double SPEED = 340; //cannot be greater than 350 to leave spce for pid control 
+const double SPEED = 350; //cannot be greater than 350 to leave spce for pid control 
 
 //IR sensor pin
 #define irR1 A0 
