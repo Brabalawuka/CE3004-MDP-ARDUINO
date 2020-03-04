@@ -7,7 +7,7 @@ void caliNew() // Do this in an unknown scenario
   
   move(convertRightAngleToTicks(90), DIRECTION_RIGHT); // rotate left
   caliFront();
-  move(convertLeftAngleToTicks(180), DIRECTION_LEFT);//rotate right
+  move(convertLeftAngleToTicks(90), DIRECTION_LEFT);//rotate right
   if(ir6reading < 10)
   {
     caliDistance1();
@@ -40,7 +40,8 @@ void caliLeftBack() // Do this when there is wall on the left and back
   caliFront();
   move(convertRightAngleToTicks(90), DIRECTION_RIGHT);// rotate left
   caliFront();
-  move(convertLeftAngleToTicks(180), DIRECTION_LEFT);//rotate right
+  move(convertLeftAngleToTicks(90), DIRECTION_LEFT);//rotate right
+  move(convertLeftAngleToTicks(90), DIRECTION_LEFT);
   caliLeftAlignmnet();
 
 }

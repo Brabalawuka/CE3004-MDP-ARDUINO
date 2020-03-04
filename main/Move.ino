@@ -11,15 +11,13 @@ int move(double ticks, const int direction[2])
 
         computeDelta();
         pid = computePID();
-        Serial.println(pid);
 
        
         double difference = ticks - m1Ticks;
-        if ( difference < 100) {
-          //brakingOffset = 2* (170 - difference);
+        if ( difference < 50) {
+          //brakingOffset = 2 * (120 - difference);
           //md.setSpeeds((SPEED + pid - brakingOffset) * direction[0], (SPEED - pid - brakingOffset) * direction[1]);
           md.setBrakes(200, 200);
-          
         } else {
           md.setSpeeds((SPEED + pid) * direction[0], (SPEED - pid) * direction[1]);
         }
@@ -29,10 +27,10 @@ int move(double ticks, const int direction[2])
         
         md.setSpeeds((SPEED + pid) * direction[0], (SPEED - pid) * direction[1]);
             
-             Serial.println("printing number of ticks");
-             Serial.println(deltaM1Ticks);
-             Serial.println(m1Ticks);
-             Serial.println(m2Ticks);
+//             Serial.println("printing number of ticks");
+//             Serial.println(deltaM1Ticks);
+//             Serial.println(m1Ticks);
+//             Serial.println(m2Ticks);
         // delay(70);
 
         //delay(1);
@@ -56,7 +54,7 @@ int move(double ticks, const int direction[2])
 //    Serial.print("# sum of deltaM2Ticks: ");
 //    Serial.println(sumOfDeltaM2);
 
-    delay(50);
+    //delay(50);
 
     return 1;
 }

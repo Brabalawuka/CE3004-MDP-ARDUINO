@@ -117,6 +117,12 @@ void loopReading(){
             
             break;
           }
+          case 'n':{
+            caliNew();
+             Serial.println("Xdone");
+            
+            break;
+          }
         }
        
         // clear the string for new input:
