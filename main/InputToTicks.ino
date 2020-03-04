@@ -11,12 +11,12 @@ double convertDistanceToTicks(int distance) //10cm
 
 double convertLeftAngleToTicks(int angle)
 {
-  double tick = angle *4.45 ; // 332-6.17VB2   6.3vB2: 332
+  double tick = angle *4.40 ; // 332-6.17VB2   6.3vB2: 332
   return tick;
 }
 
 double convertRightAngleToTicks(int angle)
 {
-  double tick = angle * 4.45; // 339 -6.17VB2     6.3vB2: 340
+  double tick = angle * 4.41; // 339 -6.17VB2     6.3vB2: 340
   return tick;
 }
