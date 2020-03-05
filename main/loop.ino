@@ -91,7 +91,7 @@ void loopReading(){
           }
 
           case 'i':{
-            caliFrontLeft();
+             caliFrontLeft();
              Serial.println("Xdone");
             
             break;

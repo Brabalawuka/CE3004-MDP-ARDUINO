@@ -1,6 +1,6 @@
-const double KP = 4;
-const double KI = 2;
-const double KD = 0.05;
+const double KP = 5;
+const double KI = 3;
+const double KD = 0.1;
 
 
 
@@ -15,6 +15,13 @@ double computePID() {   //Proportional, Integral,Derivative.
   p = KP * error;
   i = KI * cumError;
   d = KD * (error - lastError);
+
+
+  Serial.println("-----------");
+  Serial.println(p);
+  Serial.println(i);
+  Serial.println(d);
+  Serial.println("-----------");
   
   pid = p + i + d;
   

@@ -32,18 +32,18 @@ const int M2A = 3;  //Left
 const int M2B = 5;  //Left
 
 
-volatile uint16_t m1Ticks = 0;
-volatile uint16_t m2Ticks = 0;
+volatile int16_t m1Ticks = 0;
+volatile int16_t m2Ticks = 0;
 // global variables for finding PID (those indirectly based on interrupts have 'volatile' as well, may not be necessary)
-volatile uint16_t deltaM1Ticks = 0;
-volatile uint16_t deltaM2Ticks = 0;
-volatile uint16_t lastM1Ticks = 0;
-volatile uint16_t lastM2Ticks = 0;
+volatile int16_t deltaM1Ticks = 0;
+volatile int16_t deltaM2Ticks = 0;
+volatile int16_t lastM1Ticks = 0;
+volatile int16_t lastM2Ticks = 0;
 int16_t lastError = 0;
 int16_t cumError = 0;
 
 
-const double SPEED = 280; //cannot be greater than 350 to leave spce for pid control 
+const double SPEED = 350; //cannot be greater than 350 to leave spce for pid control 
 
 //IR sensor pin
 #define irR1 A0 
@@ -82,7 +82,7 @@ void loop() {
   loopReading();
   // put your main code here, to run repeatedly:
 
-  //loopSensorTest();
+  loopSensorTest();
 }
 
 
@@ -102,7 +102,10 @@ void computeDelta()
 {
     deltaM1Ticks = m1Ticks - lastM1Ticks;
     deltaM2Ticks = m2Ticks - lastM2Ticks;
-
+    Serial.println("*******");
+    Serial.println(deltaM1Ticks);
+    Serial.println(deltaM2Ticks);
+    Serial.println("*******");
     lastM1Ticks = m1Ticks;
     lastM2Ticks = m2Ticks;
     
