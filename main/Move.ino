@@ -17,8 +17,8 @@ int move(double ticks, const int direction[2])
 
         if (m1Ticks < 50){
           md.setSpeeds((SPEED - 150 + 3 * m1Ticks) * direction[0], (SPEED- 150 + 3 * m1Ticks) * direction[1]);
-        } else if ( difference < 100) {
-          brakingOffset = difference / 100;
+        } else if ( difference < 120) {
+          brakingOffset = difference / 120;
           md.setSpeeds((SPEED + pid)* brakingOffset * direction[0], (SPEED - pid)* brakingOffset * direction[1]);
           //md.setBrakes(200, 200);
         } else {

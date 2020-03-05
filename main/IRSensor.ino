@@ -35,7 +35,7 @@ float readIR3Cali() {
     arr[i] = analogRead(irR3);
   }
   float middle = median(arr, 20);
-  return 6058.366 / middle -5.56352 ;
+  return 6058.366 / middle -5.66352 ;
 }
 float readIR5Cali() {
   float arr[20] = {};
