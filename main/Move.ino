@@ -67,7 +67,7 @@ int moveWithSpeed(double ticks, const int direction[2], int speed)
 
 
     md.setSpeeds((speed + pid) * direction[0]  , (speed - pid) * direction[1]);
-    while (m1Ticks <= ticks)
+    while (m1Ticks <= ticks && Forward == true)
     {   
 
         computeDelta();

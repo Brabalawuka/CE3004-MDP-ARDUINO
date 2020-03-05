@@ -123,6 +123,18 @@ void loopReading(){
             
             break;
           }
+          case 'e':{
+            caliEdge();
+             Serial.println("Xdone");
+            
+            break;
+          }
+          case 'fx':{
+            caliForwardtoWall();
+             Serial.println("Xdone");
+            
+            break;
+          }
         }
        
         // clear the string for new input:

@@ -59,6 +59,8 @@ const int DIRECTION_BACKWARD[2] = {-1, -1};
 const int DIRECTION_LEFT[2] = {1, -1};
 const int DIRECTION_RIGHT[2] = {-1, 1};
 
+bool Forward = true;
+
 //for checklist only
 bool detect_obs = false; 
 float irLB = 0;
