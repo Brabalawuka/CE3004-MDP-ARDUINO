@@ -17,11 +17,11 @@ double computePID() {   //Proportional, Integral,Derivative.
   d = KD * (error - lastError);
 
 
-  Serial.println("-----------");
-  Serial.println(p);
-  Serial.println(i);
-  Serial.println(d);
-  Serial.println("-----------");
+//  Serial.println("-----------");
+//  Serial.println(p);
+//  Serial.println(i);
+//  Serial.println(d);
+//  Serial.println("-----------");
   
   pid = p + i + d;
   

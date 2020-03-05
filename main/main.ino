@@ -82,7 +82,7 @@ void loop() {
   loopReading();
   // put your main code here, to run repeatedly:
 
-  loopSensorTest();
+  //loopSensorTest();
 }
 
 
@@ -102,10 +102,10 @@ void computeDelta()
 {
     deltaM1Ticks = m1Ticks - lastM1Ticks;
     deltaM2Ticks = m2Ticks - lastM2Ticks;
-    Serial.println("*******");
-    Serial.println(deltaM1Ticks);
-    Serial.println(deltaM2Ticks);
-    Serial.println("*******");
+//    Serial.println("*******");
+//    Serial.println(deltaM1Ticks);
+//    Serial.println(deltaM2Ticks);
+//    Serial.println("*******");
     lastM1Ticks = m1Ticks;
     lastM2Ticks = m2Ticks;
     

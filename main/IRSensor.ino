@@ -100,10 +100,10 @@ float readIR4() {
     arr[i] = analogRead(irR4);
   }
   float middle = median(arr, 20);
-  if (middle <= 490){
+  if (middle >= 490){
     return (600 - middle)/10;
     }
-  return 14195.40269/middle - 18.893932;
+  return 13064.88062/middle - 14.58866;
 }
 
 float readIR5() {
