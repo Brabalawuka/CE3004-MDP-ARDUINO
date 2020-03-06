@@ -193,3 +193,79 @@ int moveTillEnd( const int direction[2])
 
     return 1;
 }
+int glideforward( const int direction[2]) 
+{
+    resetGlobalConstants();
+    double pid = 0;
+    double brakingOffset = 0;
+    double startingOffset = 0;
+    double dist = 9;
+    float ir1reading, ir3reading;
+
+     
+    ir1reading = readIR1Cali();
+    ir3reading = readIR3Cali();
+
+
+    //md.setSpeeds((SPEED + pid) * direction[0]  , (SPEED - pid) * direction[1]);
+    while (Forward)
+    {   
+
+        computeDelta();
+        pid = computePID();
+       
+      if (m1Ticks > 300) 
+      {
+        if(abs(ir1reading()-ir3reading())){ //check if need to do adjustment
+           if((ir3reading <5) || (ir1reading<5)) //need to move to the right, give more power to left motor
+            {
+              md.setSpeeds((SPEED + pid + 10) * direction[0], (SPEED - pid - 10) * direction[1]);
+            
+            }
+            else if((ir3reading>5)||(ir1reading>5))//need to move to the left,
+            {
+              md.setSpeeds((SPEED + pid - 10) * direction[0], (SPEED - pid + 10) * direction[1]);
+            }
+          }
+      }
+      else //when ticks are smaller than 300
+      {
+        md.setSpeeds((SPEED + pid) * direction[0], (SPEED - pid) * direction[1]);
+      }
+
+         ir1reading = readIR1Cali(); //taking reading
+         ir3reading = readIR3Cali(); //taking reading
+          
+        
+
+
+         }
+       
+//            
+             Serial.println("printing number of ticks");
+             
+             Serial.println(m1Ticks);
+             Serial.println(m2Ticks);
+    
+    }
+    md.setBrakes(400, 400);
+ //    the number of ticks output here should be the same for each motor
+//    Serial.print("#final m1ticks: ");
+//    Serial.print(m1Ticks);
+//    Serial.print(" #final m2ticks: ");
+//    Serial.println(m2Ticks);
+
+    //delay(200);
+  
+   // Serial.print("# final m2ticks after delay: ");
+   // Serial.println(m2ticks);
+
+//    Serial.print("#sum of deltaM1Ticks: ");
+//    Serial.print(sumOfDeltaM1);
+//    Serial.print("# sum of deltaM2Ticks: ");
+//    Serial.println(sumOfDeltaM2);
+
+    delay(20);
+
+    return 1;
+}
