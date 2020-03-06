@@ -1,5 +1,5 @@
-const double KP = 4;
-const double KI = 2;
+const double KP = 6;
+const double KI = 1;
 const double KD = 0.1;
 
 
@@ -23,7 +23,7 @@ double computePID() {   //Proportional, Integral,Derivative.
 //  Serial.println(d);
 //  Serial.println("-----------");
   
-  pid = p + i + d;
+  pid = p + i;
   
   lastError = error;
 

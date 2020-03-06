@@ -42,21 +42,15 @@ void caliForwardtoWall() // move until got wall in front
   float error = 0.4;
 
   float ir2reading, ir6reading;
-  ir2reading = readIR2Cali();
-  ir6reading = readIR6Cali();
+  ir2reading = readIR2();
+  ir6reading = readIR6();
 
   if(ir2reading > dist && ir6reading > dist) // checking if there is a need for me to move first
   {
-    moveWithSpeed(convertDistanceToTicks(200),   DIRECTION_FORWARD, 200); //move
+    moveTillEnd( DIRECTION_FORWARD); //move
     
-    while (( (abs(ir2reading - dist)> error)  || (abs(ir6reading- dist)> error) )) //checking readings in a loop until we reach 10cm
-    {
-      ir2reading = readIR2Cali(); //taking reading
-      ir6reading = readIR6Cali(); //taking reading
-    }
-    Forward = false; //stop moving
   }
-  
+ 
   caliFront();    
 }
 void caliFrontLeft() //when there is a wall on the front and left 
