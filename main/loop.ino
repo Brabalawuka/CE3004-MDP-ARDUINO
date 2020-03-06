@@ -129,7 +129,7 @@ void loopReading(){
             
             break;
           }
-          case 'fx':{
+          case 'x':{
             caliForwardtoWall();
              Serial.println("Xdone");
             

@@ -97,6 +97,7 @@ void resetGlobalConstants()
     deltaM2Ticks = 0;
     
     lastError = 0;
+    Forward = true;
     
 }
 
