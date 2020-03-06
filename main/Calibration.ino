@@ -25,23 +25,16 @@ void caliNew() // Do this in an unknown scenario
 }
 void caliEdge() //when there is a wall on the the left and you want the robot to be in the middle
 {
+   caliLeft();
+   
    float ir3Reading;
    ir3Reading = readIR3Cali();
    
-   move(convertRightAngleToTicks(90), DIRECTION_RIGHT); //rotate left
-   caliFront(); //check front allignment
-   
-   move(convertLeftAngleToTicks(90), DIRECTION_LEFT); //rotate right
-   caliLeftAlignmnet(); //check left allignment
-   
-   if(ir3Reading <= 10){
-    moveWithSpeed(convertDistanceToTicks(0.2),DIRECTION_FORWARD, 200); //moving forward until IR3 senses dist > 10cm  
+   while(readIR3Cali()<= 10){
+      moveWithSpeed(convertDistanceToTicks(0.2),DIRECTION_FORWARD, 200); //moving forward until IR3 senses dist > 10cm  
    }
-   else if (ir3Reading > 10){
-    moveWithSpeed(convertDistanceToTicks(8),   DIRECTION_BACKWARD, 200); // moving backward by 9cm when IR3 senses dist > 10cm 
-   }
-   
-   caliLeftAlignmnet(); //check left allignment   
+   moveWithSpeed(convertDistanceToTicks(8),   DIRECTION_BACKWARD, 200); // moving backward by 9cm when IR3 senses dist > 10cm  
+   caliLeft(); //check left allignment   
  
 }
 
@@ -56,7 +49,7 @@ void caliForwardtoWall() // move until got wall in front
 
   if(ir2reading > dist && ir6reading > dist) // checking if there is a need for me to move first
   {
-    moveWithSpeed(convertDistanceToTicks(200),   DIRECTION_BACKWARD, 200); //move
+    moveWithSpeed(convertDistanceToTicks(200),   DIRECTION_FORWARD, 200); //move
     
     while (( (abs(ir2reading - dist)> error)  || (abs(ir6reading- dist)> error) )) //checking readings in a loop until we reach 10cm
     {
