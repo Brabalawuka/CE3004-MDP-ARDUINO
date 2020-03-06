@@ -26,11 +26,11 @@ int move(double ticks, const int direction[2])
         }
         
         //md.setSpeeds((SPEED + pid) * direction[0], (SPEED - pid) * direction[1]);
-            
-             Serial.println("printing number of ticks");
-             
-             Serial.println(m1Ticks);
-             Serial.println(m2Ticks);
+//            
+//             Serial.println("printing number of ticks");
+//             
+//             Serial.println(m1Ticks);
+//             Serial.println(m2Ticks);
         // delay(70);
 
        // delay(1);
@@ -104,31 +104,6 @@ int moveWithSpeed(double ticks, const int direction[2], int speed)
 //    Serial.print(sumOfDeltaM1);
 //    Serial.print("# sum of deltaM2Ticks: ");
 //    Serial.println(sumOfDeltaM2);
-
-    delay(50);
-
-    return 1;
-}
-
-
-int fx_glide(double ticks,int speed) 
-{
-    resetGlobalConstants();
-    double pid = 0;
-
-
-    md.setSpeeds((speed + pid)   , (speed - pid) );
-   
-    while (m1Ticks <= ticks && Forward == true)
-    {   
-        if (leftwall_ir13()>0.4){  //0.4  the threshold for error
-          caliLeftAlignmnet(); //left alignment while moving
-          }
-          
-        computeDelta();
-        pid = computePID();     
-    }
-    md.setBrakes(400, 400);
 
     delay(50);
 

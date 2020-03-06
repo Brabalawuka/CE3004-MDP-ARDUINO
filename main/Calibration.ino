@@ -1,4 +1,3 @@
-
 void caliNew() // Do this in an unknown scenario
 { 
   float ir2reading, ir6reading, ir5reading;
@@ -24,25 +23,16 @@ void caliNew() // Do this in an unknown scenario
   caliLeftAlignmnet();
 
 }
-void caliEdge() //when there is a wall on the left and you want the robot to be in the middle
+void caliEdge() //when there is a wall on the the left and you want the robot to be in the middle
 {
-   float ir3Reading;
-   ir3Reading = readIR3Cali();
+   caliLeft();
    
-   move(convertRightAngleToTicks(90), DIRECTION_RIGHT); //rotate left
-   caliFront(); //check front allignment
    
-   move(convertLeftAngleToTicks(90), DIRECTION_LEFT); //rotate right
-   caliLeftAlignmnet(); //check left allignment
-   
-   if(ir3Reading <= 10){
-    moveWithSpeed(convertDistanceToTicks(0.2),DIRECTION_FORWARD, 200); //moving forward until IR3 senses dist > 10cm  
+   while(readIR3Cali() <= 10){
+      moveWithSpeed(convertDistanceToTicks(0.2),DIRECTION_FORWARD, 200); //moving forward until IR3 senses dist > 10cm  
    }
-   else if (ir3Reading > 10){
-    moveWithSpeed(convertDistanceToTicks(8),   DIRECTION_BACKWARD, 200); // moving backward by 9cm when IR3 senses dist > 10cm 
-   }
-   
-   caliLeftAlignmnet(); //check left allignment   
+   moveWithSpeed(convertDistanceToTicks(8),   DIRECTION_BACKWARD, 200); // moving backward by 9cm when IR3 senses dist > 10cm  
+   caliLeft(); //check left allignment   
  
 }
 
@@ -57,7 +47,7 @@ void caliForwardtoWall() // move until got wall in front
 
   if(ir2reading > dist && ir6reading > dist) // checking if there is a need for me to move first
   {
-    moveWithSpeed(convertDistanceToTicks(200),   DIRECTION_BACKWARD, 200); //move
+    moveWithSpeed(convertDistanceToTicks(200),   DIRECTION_FORWARD, 200); //move
     
     while (( (abs(ir2reading - dist)> error)  || (abs(ir6reading- dist)> error) )) //checking readings in a loop until we reach 10cm
     {
@@ -200,7 +190,7 @@ void caliLeftAlignmnet(){
   float ir_diff = readIR1Cali() - readIR3Cali();
 
   // using Right front and right back sensors
-  while (abs(ir_diff) > 0.3 && not(tried_left && tried_right))
+  while (abs(ir_diff) > 0.2 && not(tried_left && tried_right))
   {
 
     //delay(10);
@@ -211,7 +201,7 @@ void caliLeftAlignmnet(){
       moveWithSpeed(convertRightAngleToTicks(0.2), DIRECTION_RIGHT, 200);
       tried_left = true;
     }
-    else if (ir_diff > 0.3) //if my ir3 is closer to the wall, then we move on the right
+    else if (ir_diff > 0.2) //if my ir3 is closer to the wall, then we move on the right
     {
       //right
       moveWithSpeed(convertLeftAngleToTicks(0.2), DIRECTION_LEFT, 200);

@@ -77,7 +77,6 @@ void setup() {
 
   /*CheckList*/
    //navObs(convertDistanceToTicks(100),DIRECTION_FORWARD); //uncomment this and comment 'loopreading' to check for navigate obstacle checklist */
-   //fx_glide(convertDistanceToTicks(100),300); 
 }
 
 void loop() {
@@ -98,6 +97,7 @@ void resetGlobalConstants()
     deltaM2Ticks = 0;
     
     lastError = 0;
+    Forward = true;
     
 }
 
