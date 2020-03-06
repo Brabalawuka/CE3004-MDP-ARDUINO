@@ -27,10 +27,8 @@ void caliEdge() //when there is a wall on the the left and you want the robot to
 {
    caliLeft();
    
-   float ir3Reading;
-   ir3Reading = readIR3Cali();
    
-   while(readIR3Cali()<= 10){
+   while(readIR3Cali() <= 10){
       moveWithSpeed(convertDistanceToTicks(0.2),DIRECTION_FORWARD, 200); //moving forward until IR3 senses dist > 10cm  
    }
    moveWithSpeed(convertDistanceToTicks(8),   DIRECTION_BACKWARD, 200); // moving backward by 9cm when IR3 senses dist > 10cm  

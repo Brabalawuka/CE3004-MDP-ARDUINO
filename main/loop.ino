@@ -82,6 +82,13 @@ void loopReading(){
 
             break;
           }
+          
+          case 'm':{
+            checkRawValuesCali ();
+          
+            break;
+          }
+
 
           case 'k':{
             navObs(convertDistanceToTicks(100),DIRECTION_FORWARD);
@@ -99,7 +106,7 @@ void loopReading(){
 
           case 'o':{
             caliFront();
-             Serial.println("Xdone");
+            Serial.println("Xdone");
             
             break;
           }
