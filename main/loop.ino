@@ -142,6 +142,11 @@ void loopReading(){
             
             break;
           }
+          case 'g':{
+            fx_glide(convertDistanceToTicks(100),300);
+
+            break;
+          }
         }
        
         // clear the string for new input:

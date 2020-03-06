@@ -9,6 +9,9 @@ Short Sensor - 1,2,3,5,6
 Long Sensor - 4
 
 */ 
+float leftwall_ir13(){
+    return abs(readIR1Cali()-readIR3Cali());
+  }
 
 float readIR1Cali() {
   float arr[20] = {};

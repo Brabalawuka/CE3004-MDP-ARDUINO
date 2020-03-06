@@ -109,3 +109,26 @@ int moveWithSpeed(double ticks, const int direction[2], int speed)
 
     return 1;
 }
+int fx_glide(double ticks,int speed) 
+{
+    resetGlobalConstants();
+    double pid = 0;
+
+
+    md.setSpeeds((speed + pid)   , (speed - pid) );
+   
+    while (m1Ticks <= ticks && Forward == true)
+    {   
+        if (leftwall_ir13()>0.4){  //0.4  the threshold for error
+          caliLeftAlignmnet(); //left alignment while moving
+          }
+          
+        computeDelta();
+        pid = computePID();     
+    }
+    md.setBrakes(400, 400);
+
+    delay(50);
+
+    return 1;
+}
