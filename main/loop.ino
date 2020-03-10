@@ -144,7 +144,7 @@ void loopReading(){
           }
           case 'g':{
             
-            glideforward(DIRECTION_FORWARD) 
+            glideforward(convertDistanceToTicks(distance), DIRECTION_FORWARD);
             break;
          }
         }
