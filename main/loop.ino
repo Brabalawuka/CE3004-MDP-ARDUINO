@@ -57,6 +57,13 @@ void loopReading(){
             Serial.println("Xdone");
             break;
           }
+          case 'F':{
+            move(convertDiagDistanceToTicks(distance),  DIRECTION_FORWARD);
+            //moveWithSpeed(convertDistanceToTicks(distance),  DIRECTION_FORWARD, 150);
+
+            Serial.println("Xdone");
+            break;
+          }
           case 'b':{
             move(convertDistanceToTicks(distance),   DIRECTION_BACKWARD);
             Serial.println("Xdone");

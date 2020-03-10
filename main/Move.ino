@@ -126,6 +126,41 @@ int moveTillEnd(const int direction[2])
 
     return 1;
 }
+
+int moveTillLeftEnd(const int direction[2], int speed) 
+{
+    resetGlobalConstants();
+    double pid = 0;
+    double brakingOffset = 0;
+    double startingOffset = 0;
+    double dist = 9;
+    float ir3reading;
+
+
+    //md.setSpeeds((speed + pid) * direction[0]  , (speed - pid) * direction[1]);
+    while (true)
+    {   
+
+        computeDelta();
+        pid = computePID();
+       
+
+        md.setSpeeds((speed + pid) * direction[0], (speed - pid) * direction[1]);
+
+        ir3reading = readIR3(); //taking reading
+        
+
+         if(ir3reading > dist){
+          break;
+         }
+    
+    }
+    md.setBrakes(400, 400);
+
+    delay(20);
+
+    return 1;
+}
 int glideforward(double ticks, const int direction[2]) 
 {
   
