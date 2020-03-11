@@ -56,8 +56,8 @@ const double SPEED = 350; //cannot be greater than 350 to leave spce for pid con
 
 const int DIRECTION_FORWARD[2] = {1, 1};
 const int DIRECTION_BACKWARD[2] = {-1, -1};
-const int DIRECTION_LEFT[2] = {1, -1};
-const int DIRECTION_RIGHT[2] = {-1, 1};
+const int DIRECTION_LEFT[2] = {-1, 1}; //{1,-1} 
+const int DIRECTION_RIGHT[2] = {1, -1}; //{-1,1}
 
 bool Forward = true;
 

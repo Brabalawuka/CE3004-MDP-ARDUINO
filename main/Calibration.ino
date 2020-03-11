@@ -3,9 +3,9 @@ void caliNew() // Do this in an unknown scenario
   float ir2reading, ir6reading, ir5reading;
   
   
-  move(convertRightAngleToTicks(90), DIRECTION_RIGHT); // rotate left
+  move(convertLeftAngleToTicks(90), DIRECTION_LEFT); // rotate left
   caliFront();
-  move(convertLeftAngleToTicks(90), DIRECTION_LEFT);//rotate right
+  move(convertRightAngleToTicks(90), DIRECTION_RIGHT);//rotate right
 
   ir2reading = readIR2Cali();
   ir6reading = readIR6Cali();
@@ -55,20 +55,20 @@ void caliFrontLeft() //when there is a wall on the front and left
 {
   //Calibrate distance and alignment to the front wall
   
-  move(convertRightAngleToTicks(90), DIRECTION_RIGHT); //rotate left
+  move(convertLeftAngleToTicks(90), DIRECTION_LEFT); //rotate left
   caliFront();
-  move(convertLeftAngleToTicks(90), DIRECTION_LEFT); //rotate right
+  move(convertRightAngleToTicks(90), DIRECTION_RIGHT); //rotate right
   caliFront();
  
 }
 
 void caliLeftBack() // Do this when there is wall on the left and back
 {
-  move(convertRightAngleToTicks(180), DIRECTION_RIGHT); // rotate left
+  move(convertLeftAngleToTicks(180), DIRECTION_LEFT); // rotate left
   caliFront();
-  move(convertLeftAngleToTicks(90), DIRECTION_LEFT);//rotate right
+  move(convertRightAngleToTicks(90), DIRECTION_RIGHT);//rotate right
   caliFront();
-  move(convertLeftAngleToTicks(90), DIRECTION_LEFT);
+  move(convertRightAngleToTicks(90), DIRECTION_RIGHT);
   caliLeftAlignmnet();
 
 }
@@ -82,12 +82,13 @@ void caliLeft(){
 
   if(ir1Reading <= 4.2 || ir1Reading >= 5.8 || ir3Reading >= 5.8 || ir3Reading <= 4.2)
   {
-    move(convertRightAngleToTicks(90), DIRECTION_RIGHT);
+    move(convertLeftAngleToTicks(90), DIRECTION_LEFT);
     caliFront();
-    move(convertLeftAngleToTicks(90), DIRECTION_LEFT);//rotate right
+    move(convertRightAngleToTicks(90), DIRECTION_RIGHT);//rotate right
   }
 
   caliLeftAlignmnet();
+
 }
 
 void caliFront() //check if it is parallel to my front wall using sensors (IR2 & IR6)
@@ -157,13 +158,13 @@ void caliAlignment(){
     if (ir_diff < 0.3) //if my ir2 is closer to the wall, then we move on the left
     {
       //left adjustment
-      moveWithSpeed(convertRightAngleToTicks(0.2), DIRECTION_RIGHT, 200);
+      moveWithSpeed(convertLeftAngleToTicks(0.2), DIRECTION_LEFT, 200); //move left
       tried_left = true;
     }
     else if (ir_diff > 0.2) // if my ir6 is closer to the wall, then we move on the right
     {
       //right adjustment
-      moveWithSpeed(convertLeftAngleToTicks(0.2), DIRECTION_LEFT, 200);
+      moveWithSpeed(convertRightAngleToTicks(0.2), DIRECTION_RIGHT, 200); //move right
       tried_right = true;
     }
     ir_diff = readIR2Cali() - readIR6Cali();
@@ -190,13 +191,13 @@ void caliLeftAlignmnet(){
     if (ir_diff < 0.3) //if my ir1 is closer to the wall, then we move on the left
     {
       //left
-      moveWithSpeed(convertRightAngleToTicks(0.2), DIRECTION_RIGHT, 200);
+      moveWithSpeed(convertLeftAngleToTicks(0.2), DIRECTION_LEFT, 200);
       tried_left = true;
     }
     else if (ir_diff > 0.2) //if my ir3 is closer to the wall, then we move on the right
     {
       //right
-      moveWithSpeed(convertLeftAngleToTicks(0.2), DIRECTION_LEFT, 200);
+      moveWithSpeed(convertRightAngleToTicks(0.2), DIRECTION_RIGHT, 200);
       tried_right = true;
     }
     

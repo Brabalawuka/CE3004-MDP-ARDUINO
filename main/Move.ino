@@ -258,14 +258,20 @@ int diagnalAvoid(const int direction[2]){
 
     delay(20);
 
-    move(convertLeftAngleToTicks(45), DIRECTION_LEFT);
+    move(convertRightAngleToTicks(45), DIRECTION_RIGHT);
     move(convertDiagDistanceToTicks(30),  DIRECTION_FORWARD);
-    move(convertRightAngleToTicks(90), DIRECTION_RIGHT);
+    move(convertLeftAngleToTicks(90), DIRECTION_LEFT);
     move(convertDiagDistanceToTicks(30),  DIRECTION_FORWARD);
-    move(convertLeftAngleToTicks(45), DIRECTION_LEFT);
+    move(convertRightAngleToTicks(45), DIRECTION_RIGHT);
     moveTillEnd(DIRECTION_FORWARD);
-    
-    
+
+//    move(convertLeftAngleToTicks(45), DIRECTION_LEFT);
+//    move(convertDiagDistanceToTicks(30),  DIRECTION_FORWARD);
+//    move(convertRightAngleToTicks(90), DIRECTION_RIGHT);
+//    move(convertDiagDistanceToTicks(30),  DIRECTION_FORWARD);
+//    move(convertLeftAngleToTicks(45), DIRECTION_LEFT);
+//    moveTillEnd(DIRECTION_FORWARD);
+//    
 
   
   
