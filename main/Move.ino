@@ -262,6 +262,7 @@ int diagnalAvoid(const int direction[2]){
     move(convertDiagDistanceToTicks(30),  DIRECTION_FORWARD);
     move(convertRightAngleToTicks(90), DIRECTION_RIGHT);
     move(convertDiagDistanceToTicks(30),  DIRECTION_FORWARD);
+    move(convertLeftAngleToTicks(45), DIRECTION_LEFT);
     moveTillEnd(DIRECTION_FORWARD);
     
     
