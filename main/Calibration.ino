@@ -1,24 +1,25 @@
 void caliNew() // Do this in an unknown scenario
 { 
   float ir2reading, ir6reading, ir5reading;
-  ir2reading = readIR2Cali();
-  ir6reading = readIR6Cali();
-  ir5reading = readIR5Cali();
+  
   
   move(convertRightAngleToTicks(90), DIRECTION_RIGHT); // rotate left
   caliFront();
   move(convertLeftAngleToTicks(90), DIRECTION_LEFT);//rotate right
-  if(ir6reading < 10)
-  {
-    caliDistance1();
-  }
-  else if(ir5reading < 10)
-  {
-    caliDistance2();
-  }
-  else if(ir2reading < 10)
+
+  ir2reading = readIR2Cali();
+  ir6reading = readIR6Cali();
+  ir5reading = readIR5Cali();
+  
+  if(ir2reading < ir6reading && ir2reading < ir5reading)
   {
     caliDistance3();
+  }else if(ir5reading < ir2reading && ir5reading < ir6reading)
+  {
+    caliDistance2();
+  }else if(ir6reading < ir2reading && ir6reading < ir5reading)
+  {
+    caliDistance1();
   }
   caliLeftAlignmnet();
 

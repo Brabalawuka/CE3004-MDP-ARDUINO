@@ -112,13 +112,7 @@ int moveTillEnd(const int direction[2])
          if(ir2reading < dist && ir6reading < dist){
           break;
          }
-       
-//            
-             Serial.println("printing number of ticks");
-             
-             Serial.println(m1Ticks);
-             Serial.println(m2Ticks);
-    
+
     }
     md.setBrakes(400, 400);
 
@@ -221,3 +215,57 @@ int glideforward(double ticks, const int direction[2])
 
     return 1;
 }
+
+
+
+
+
+
+
+int diagnalAvoid(const int direction[2]){
+
+    resetGlobalConstants();
+    double pid = 0;
+    double brakingOffset = 0;
+    double startingOffset = 0;
+    double dist =17;
+    float ir5reading;
+  
+
+    //md.setSpeeds((SPEED + pid) * direction[0]  , (SPEED - pid) * direction[1]);
+    while (true)
+    {   
+
+        computeDelta();
+        pid = computePID();
+       
+
+        if (m1Ticks < 50){
+          md.setSpeeds((SPEED - 150 + 3 * m1Ticks) * direction[0], (SPEED- 150 + 3 * m1Ticks) * direction[1]);
+        }  else {
+          md.setSpeeds((SPEED + pid) * direction[0], (SPEED - pid) * direction[1]);
+        }
+
+         ir5reading = readIR5(); //taking reading
+        
+         if(ir5reading < dist){
+          break;
+         }
+      
+    
+    }
+    md.setBrakes(400, 400);
+
+    delay(20);
+
+    move(convertLeftAngleToTicks(45), DIRECTION_LEFT);
+    move(convertDiagDistanceToTicks(30),  DIRECTION_FORWARD);
+    move(convertRightAngleToTicks(90), DIRECTION_RIGHT);
+    move(convertDiagDistanceToTicks(30),  DIRECTION_FORWARD);
+    moveTillEnd(DIRECTION_FORWARD);
+    
+    
+
+  
+  
+  }

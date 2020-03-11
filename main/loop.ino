@@ -98,7 +98,7 @@ void loopReading(){
 
 
           case 'k':{
-            navObs(convertDistanceToTicks(100),DIRECTION_FORWARD);
+            diagnalAvoid(DIRECTION_FORWARD);
              Serial.println("Xdone");
             
             break;
