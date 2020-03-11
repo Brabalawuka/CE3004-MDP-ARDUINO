@@ -27,10 +27,10 @@ int move(double ticks, const int direction[2])
         
         //md.setSpeeds((SPEED + pid) * direction[0], (SPEED - pid) * direction[1]);
             
-//             Serial.println("printing number of ticks");
-//             
-//             Serial.println(m1Ticks);
-//             Serial.println(m2Ticks);
+             Serial.println("printing number of ticks");
+             
+             Serial.println(m1Ticks);
+             Serial.println(m2Ticks);
         
 
        // delay(1);
