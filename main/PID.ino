@@ -1,5 +1,5 @@
-const double KP = 6;
-const double KI = 1;
+const double KP = 4;
+const double KI = 2;
 const double KD = 0.1;
 
 
@@ -11,6 +11,7 @@ double computePID() {   //Proportional, Integral,Derivative.
 
   error = deltaM1Ticks - deltaM2Ticks; // originally was m1ticks - m2ticks, which is actually cumulative error (without taking into account time) because m1ticks and m2ticks are cumulative.
   cumError = m1Ticks - m2Ticks;
+  Serial.println(error);
 
   p = KP * error;
   i = KI * cumError;
@@ -23,7 +24,7 @@ double computePID() {   //Proportional, Integral,Derivative.
 //  Serial.println(d);
 //  Serial.println("-----------");
   
-  pid = p + i;
+  pid = i;
   
   lastError = error;
 

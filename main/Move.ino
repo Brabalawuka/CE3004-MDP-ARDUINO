@@ -17,8 +17,9 @@ int move(double ticks, const int direction[2])
 
         if (m1Ticks < 50){
           md.setSpeeds((SPEED - 150 + 3 * m1Ticks) * direction[0], (SPEED- 150 + 3 * m1Ticks) * direction[1]);
-        } else if ( difference < 120) {
-          brakingOffset = difference / 120;
+        } else 
+        if ( difference < 100) {
+          brakingOffset = difference / 100;
           md.setSpeeds((SPEED + pid)* brakingOffset * direction[0], (SPEED - pid)* brakingOffset * direction[1]);
           //md.setBrakes(200, 200);
         } else {
@@ -27,10 +28,10 @@ int move(double ticks, const int direction[2])
         
         //md.setSpeeds((SPEED + pid) * direction[0], (SPEED - pid) * direction[1]);
             
-             Serial.println("printing number of ticks");
-             
-             Serial.println(m1Ticks);
-             Serial.println(m2Ticks);
+//             Serial.println("printing number of ticks");
+//             
+//             Serial.println(m1Ticks);
+//             Serial.println(m2Ticks);
         
 
        // delay(1);
@@ -52,7 +53,7 @@ int move(double ticks, const int direction[2])
 //    Serial.print("# sum of deltaM2Ticks: ");
 //    Serial.println(sumOfDeltaM2);
 
-    delay(20);
+    delay(10);
 
     return 1;
 }
@@ -75,7 +76,7 @@ int moveWithSpeed(double ticks, const int direction[2], int speed)
     }
     md.setBrakes(400, 400);
 
-    delay(50);
+    delay(10);
 
     return 1;
 }
@@ -100,8 +101,8 @@ int moveTillEnd(const int direction[2])
         pid = computePID();
        
 
-        if (m1Ticks < 50){
-          md.setSpeeds((SPEED - 150 + 3 * m1Ticks) * direction[0], (SPEED- 150 + 3 * m1Ticks) * direction[1]);
+        if (m1Ticks < 30){
+          md.setSpeeds((SPEED - 150 + 5 * m1Ticks) * direction[0], (SPEED- 150 + 5 * m1Ticks) * direction[1]);
         }  else {
           md.setSpeeds((SPEED + pid) * direction[0], (SPEED - pid) * direction[1]);
         }
@@ -181,8 +182,8 @@ int glideforward(double ticks, const int direction[2])
 
         if (m1Ticks < 50){
           md.setSpeeds((SPEED - 150 + 3 * m1Ticks) * direction[0], (SPEED- 150 + 3 * m1Ticks) * direction[1]);
-        } else if ( difference < 120) {
-          brakingOffset = difference / 120;
+        } else if ( difference < 100) {
+          brakingOffset = difference / 100;
           md.setSpeeds((SPEED + pid)* brakingOffset * direction[0], (SPEED - pid)* brakingOffset * direction[1]);
           //md.setBrakes(200, 200);
         } else {
@@ -240,8 +241,8 @@ int diagnalAvoid(const int direction[2]){
         pid = computePID();
        
 
-        if (m1Ticks < 50){
-          md.setSpeeds((SPEED - 150 + 3 * m1Ticks) * direction[0], (SPEED- 150 + 3 * m1Ticks) * direction[1]);
+        if (m1Ticks < 30){
+          md.setSpeeds((SPEED - 150 + 5 * m1Ticks) * direction[0], (SPEED- 150 + 3 * m1Ticks) * direction[1]);
         }  else {
           md.setSpeeds((SPEED + pid) * direction[0], (SPEED - pid) * direction[1]);
         }
