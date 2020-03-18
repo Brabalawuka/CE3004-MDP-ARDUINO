@@ -128,6 +128,12 @@ void loopReading(){
 //            
 //            break;
 //          }
+          case 'k':{
+            moveWithSpeed(convertDiagDistanceToTicks(distance), DIRECTION_FORWARD, 100);
+            Serial.println("Xdone");
+            
+            break;
+          }
 //
 //          case 'i':{
 //             caliFrontLeft();

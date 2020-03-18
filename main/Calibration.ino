@@ -84,22 +84,22 @@ void caliFront() //check if it is parallel to my front wall using sensors (IR2 &
 {
   
   caliFrontAlignment();
-  float ir1reading, ir2reading, ir3reading;
-  ir1reading = readIR1Cali();
-  ir2reading = readIR2Cali();
-  ir3reading = readIR3Cali();
-  
-  if(ir1reading < ir3reading && ir1reading < ir2reading)
-  {
-    caliDistanceUsingSensor(1);
-  }else if(ir2reading < ir1reading && ir2reading < ir3reading)
-  {
-    caliDistanceUsingSensor(2);
-  }else if(ir3reading < ir1reading && ir3reading < ir2reading)
-  {
-    caliDistanceUsingSensor(3);
-  }
-//  caliDistance();
+//  float ir1reading, ir2reading, ir3reading;
+//  ir1reading = readIR1Cali();
+//  ir2reading = readIR2Cali();
+//  ir3reading = readIR3Cali();
+//  
+//  if(ir1reading < ir3reading && ir1reading < ir2reading)
+//  {
+//    caliDistanceUsingSensor(1);
+//  }else if(ir2reading < ir1reading && ir2reading < ir3reading)
+//  {
+//    caliDistanceUsingSensor(2);
+//  }else if(ir3reading < ir1reading && ir3reading < ir2reading)
+//  {
+//    caliDistanceUsingSensor(3);
+//  }
+  caliDistance();
 //  caliAlignment();
 
 }
@@ -111,39 +111,39 @@ void caliFront() //check if it is parallel to my front wall using sensors (IR2 &
 
 
 //Calibrite the distance to the front wall as 5cm using front sensors
-//void caliDistance()
-//{
-//  bool tried_front = false;
-//  bool tried_back = false;
-//  float dist = 4.9;
-//  float error = 0.4;
-//
-//  float ir1reading, ir3reading;
-//  ir1reading = readIR1Cali();
-//  ir3reading = readIR3Cali();
-//
-//
-//    while( ( (abs(ir1reading - dist)> error)  || (abs(ir3reading- dist)> error) ) //first checking if there is a difference and there is a need to calibrate
-//           && not(tried_front && tried_back)){ //will stop when when IR reading is within error && both (tried_front & tried_back are true).
-//
-//    if (ir1reading < dist || ir3reading < dist) // so if the distance from the front is < than 5cm, we move backward
-//    {
-//      moveWithSpeed(convertDistanceToTicks(0.2),   DIRECTION_BACKWARD, 200);
-//      ir1reading = readIR1Cali();
-//    
-//      ir3reading = readIR3Cali();
-//      tried_front = true;
-//    }
-//    else if (ir1reading > dist && ir3reading > dist) // so if the distannce front is > than 5 cm, we move forward
-//    {
-//      moveWithSpeed(convertDistanceToTicks(0.2),DIRECTION_FORWARD, 200);
-//      ir1reading = readIR1Cali();
-//    
-//      ir3reading = readIR3Cali();
-//      tried_back = true;
-//    }
-//  }
-//}
+void caliDistance()
+{
+  bool tried_front = false;
+  bool tried_back = false;
+  float dist = 4.9;
+  float error = 0.4;
+
+  float ir1reading, ir3reading;
+  ir1reading = readIR1Cali();
+  ir3reading = readIR3Cali();
+
+
+    while( ( (abs(ir1reading - dist)> error)  || (abs(ir3reading- dist)> error) ) //first checking if there is a difference and there is a need to calibrate
+           && not(tried_front && tried_back)){ //will stop when when IR reading is within error && both (tried_front & tried_back are true).
+
+    if (ir1reading < dist || ir3reading < dist) // so if the distance from the front is < than 5cm, we move backward
+    {
+      moveWithSpeed(convertDistanceToTicks(0.2),   DIRECTION_BACKWARD, 200);
+      ir1reading = readIR1Cali();
+    
+      ir3reading = readIR3Cali();
+      tried_front = true;
+    }
+    else if (ir1reading > dist && ir3reading > dist) // so if the distannce front is > than 5 cm, we move forward
+    {
+      moveWithSpeed(convertDistanceToTicks(0.2),DIRECTION_FORWARD, 200);
+      ir1reading = readIR1Cali();
+    
+      ir3reading = readIR3Cali();
+      tried_back = true;
+    }
+  }
+}
 
 //Calibrite the alignment to front walls using front sensors
 void caliFrontAlignment(){
@@ -255,39 +255,72 @@ void caliDistanceUsingSensor(int number) //Using IR1 IR2 IR3
      case 2: {irreading = readIR2Cali();break;}
      case 3: {irreading = readIR3Cali();break;}
    }
+
+
+  while( (abs(irreading- 5.0)> error) && not(tried_front && tried_back)){ //will stop when when IR reading is within error && both (tried_front & tried_back are true).
+
+    if (irreading < distNear) // so if the distance from the front is < than 5cm, we move backward
+    {
+      moveWithSpeed(convertDistanceToTicks(0.2),   DIRECTION_BACKWARD, 200);
    
-   resetGlobalConstants();
-   while( (abs(irreading - 5)> error) && not(tried_front && tried_back)){
-      //will stop when when IR reading is within error && both (tried_front & tried_back are true).
-      while (irreading < distNear) // so if the distance from the front is < than 5cm, we move backward
-      {      
-         double pid = 0;
-         md.setSpeeds((200 + pid) * DIRECTION_BACKWARD[0]  , (200 - pid) * DIRECTION_BACKWARD[1]);
-         computeDelta();
-         pid = computePID();
-         switch (number){
-           case 1: {irreading = readIR1Cali();break;}
-           case 2: {irreading = readIR2Cali();break;}
-           case 3:{irreading = readIR3Cali();break;}
-         }
-         
+      switch (number){
+        case 1: {irreading = readIR1Cali();break;}
+        case 2: {irreading = readIR2Cali();break;}
+        case 3: {irreading = readIR3Cali();break;}
       }
-      md.setBrakes(400, 400);
-      resetGlobalConstants();
       tried_front = true;
-      while (irreading > distFar) // so if the distannce front is > than 5 cm, we move forward
-      {
-         double pid = 0;
-         md.setSpeeds((200 + pid) * DIRECTION_FORWARD[0]  , (200 - pid) * DIRECTION_FORWARD[1]);
-         computeDelta();
-         pid = computePID();
-         switch (number){
-           case 1: {irreading = readIR1Cali();break;}
-           case 2: {irreading = readIR2Cali();break;}
-           case 3:{irreading = readIR3Cali();break;}
-         }
+    }
+    else if (irreading > distFar) // so if the distannce front is > than 5 cm, we move forward
+    {
+      moveWithSpeed(convertDistanceToTicks(0.2),DIRECTION_FORWARD, 200);
+    
+      switch (number){
+        case 1: {irreading = readIR1Cali();break;}
+        case 2: {irreading = readIR2Cali();break;}
+        case 3: {irreading = readIR3Cali();break;}
       }
-      md.setBrakes(400, 400);
       tried_back = true;
+    }
+    
   }
+
+
+   
+   
+//   while( (abs(irreading - 5)> error) && not(tried_front && tried_back)){
+//      //will stop when when IR reading is within error && both (tried_front & tried_back are true).
+//      resetGlobalConstants();
+//      double pid = 0;
+//      while (irreading < distNear) // so if the distance from the front is < than 5cm, we move backward
+//      {      
+//         
+//         md.setSpeeds((100 + pid) * DIRECTION_BACKWARD[0]  , (100 - pid) * DIRECTION_BACKWARD[1]);
+//         computeDelta();
+//         pid = computePID();
+//         switch (number){
+//           case 1: {irreading = readIR1Cali();break;}
+//           case 2: {irreading = readIR2Cali();break;}
+//           case 3:{irreading = readIR3Cali();break;}
+//         }
+//         
+//      }
+//      md.setBrakes(400, 400);
+//      resetGlobalConstants();
+//      tried_front = true;
+//      pid = 0;
+//      while (irreading > distFar) // so if the distannce front is > than 5 cm, we move forward
+//      {
+//       
+//         md.setSpeeds((100 + pid) * DIRECTION_FORWARD[0]  , (100 - pid) * DIRECTION_FORWARD[1]);
+//         computeDelta();
+//         pid = computePID();
+//         switch (number){
+//           case 1: {irreading = readIR1Cali();break;}
+//           case 2: {irreading = readIR2Cali();break;}
+//           case 3:{irreading = readIR3Cali();break;}
+//         }
+//      }
+//      md.setBrakes(400, 400);
+//      tried_back = true;
+//  }
 }

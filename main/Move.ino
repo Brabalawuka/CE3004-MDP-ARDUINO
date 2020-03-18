@@ -44,7 +44,7 @@ int move(double ticks, const int direction[2])
 //    Serial.print("# sum of deltaM2Ticks: ");
 //    Serial.println(sumOfDeltaM2);
 
-    delay(10);
+    delay(50);
 
     return 1;
 }
