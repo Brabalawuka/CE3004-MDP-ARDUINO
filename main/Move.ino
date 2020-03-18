@@ -129,7 +129,7 @@ int moveTillLeftEnd(const int direction[2], int speed)
     double brakingOffset = 0;
     double startingOffset = 0;
     double dist = 9;
-    float ir3reading;
+    float ir4reading;
 
 
     //md.setSpeeds((speed + pid) * direction[0]  , (speed - pid) * direction[1]);
@@ -142,10 +142,10 @@ int moveTillLeftEnd(const int direction[2], int speed)
 
         md.setSpeeds((speed + pid) * direction[0], (speed - pid) * direction[1]);
 
-        ir3reading = readIR3(); //taking reading
+        ir4reading = readIR4(); //taking reading
         
 
-         if(ir3reading > dist){
+         if(ir4reading > dist){
           break;
          }
     

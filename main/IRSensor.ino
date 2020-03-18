@@ -145,9 +145,8 @@ void checkRawValuesCali (){
     Serial.println("X"+String(readIR1Cali())+";"
                       +String(readIR2Cali())+";"
                       +String(readIR3Cali())+";"
-                      +String(readIR4())+";"
-                      +String(readIR5Cali())+";"
-                      +String(readIR6Cali())
+                      +String(readIR4Cali())+";"
+                      +String(readIR5Cali())
                  );
 //        Serial.println("X"+String(median(irArr1,irsampleSize))+";"
 //                      +String(median(irArr2,irsampleSize))+";"
