@@ -251,13 +251,12 @@ void caliDistanceUsingSensor(int number) //Using IR1 IR2 IR3
 
   float irreading;
   switch (number){
-     case 1: {irreading = readIR1Cali();}
-     case 2: {irreading = readIR2Cali();}
-     case 3: {irreading = readIR3Cali();}
+     case 1: {irreading = readIR1Cali();break;}
+     case 2: {irreading = readIR2Cali();break;}
+     case 3: {irreading = readIR3Cali();break;}
    }
    
    resetGlobalConstants();
-   
    while( (abs(irreading - 5)> error) && not(tried_front && tried_back)){
       //will stop when when IR reading is within error && both (tried_front & tried_back are true).
       while (irreading < distNear) // so if the distance from the front is < than 5cm, we move backward
@@ -267,9 +266,9 @@ void caliDistanceUsingSensor(int number) //Using IR1 IR2 IR3
          computeDelta();
          pid = computePID();
          switch (number){
-           case 1: {irreading = readIR1Cali();}
-           case 2: {irreading = readIR2Cali();}
-           case 3:{irreading = readIR3Cali();}
+           case 1: {irreading = readIR1Cali();break;}
+           case 2: {irreading = readIR2Cali();break;}
+           case 3:{irreading = readIR3Cali();break;}
          }
          
       }
@@ -283,9 +282,9 @@ void caliDistanceUsingSensor(int number) //Using IR1 IR2 IR3
          computeDelta();
          pid = computePID();
          switch (number){
-           case 1: {irreading = readIR1Cali();}
-           case 2: {irreading = readIR2Cali();}
-           case 3:{irreading = readIR3Cali();}
+           case 1: {irreading = readIR1Cali();break;}
+           case 2: {irreading = readIR2Cali();break;}
+           case 3:{irreading = readIR3Cali();break;}
          }
       }
       md.setBrakes(400, 400);

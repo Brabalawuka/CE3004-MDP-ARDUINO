@@ -11,7 +11,7 @@ double computePID() {   //Proportional, Integral,Derivative.
 
   error = deltaM1Ticks - deltaM2Ticks; // originally was m1ticks - m2ticks, which is actually cumulative error (without taking into account time) because m1ticks and m2ticks are cumulative.
   cumError = m1Ticks - m2Ticks;
-  Serial.println(error);
+  //Serial.println(error);
 
   p = KP * error;
   i = KI * cumError;
