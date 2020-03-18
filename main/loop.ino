@@ -85,9 +85,7 @@ void loopReading(){
 
           case 's':{
             checkRawValues ();
-            checkRawValuesCali ();
-            
-
+     
             break;
           }
           
@@ -97,64 +95,59 @@ void loopReading(){
             break;
           }
 
-
-          case 'k':{
-            diagnalAvoid(DIRECTION_FORWARD);
-             Serial.println("Xdone");
-            
-            break;
-          }
-
-          case 'i':{
-             caliFrontLeft();
-             Serial.println("Xdone");
-            
-            break;
-          }
-
-          case 'o':{
-            caliFront();
-            Serial.println("Xdone");
-            
-            break;
-          }
-
           case 'p':{
             caliLeft();
-             Serial.println("Xdone");
-            
+            Serial.println("Xdone");
             break;
           }
-
-          case 'u':{
-            caliLeftBack();
-             Serial.println("Xdone");
-            
-            break;
-          }
+         
           case 'n':{
             caliNew();
-             Serial.println("Xdone");
-            
+            Serial.println("Xdone");
             break;
           }
           case 'e':{
             caliEdge();
-             Serial.println("Xdone");
-            
+            Serial.println("Xdone");
+            break;
+          }
+           case 'u':{
+            caliLeftBack();
+            Serial.println("Xdone");
             break;
           }
           case 'x':{
             caliForwardtoWall();
-             Serial.println("Xdone");
-            
+            Serial.println("Xdone");
             break;
           }
-          case 'g':{
-            
-            glideforward(convertDistanceToTicks(distance), DIRECTION_FORWARD);
+
+//          case 'k':{
+//            diagnalAvoid(DIRECTION_FORWARD);
+//            Serial.println("Xdone");
+//            
+//            break;
+//          }
+//
+//          case 'i':{
+//             caliFrontLeft();
+//             Serial.println("Xdone");
+//            
+//            break;
+//          }
+//
+          case 'o':{
+            caliFront();
+            Serial.println("Xdone");
             break;
-         }
+          }
+
+         
+          
+//          case 'g':{
+//            glideforward(convertDistanceToTicks(distance), DIRECTION_FORWARD);
+//            break;
+//         }
         }
        
         // clear the string for new input:

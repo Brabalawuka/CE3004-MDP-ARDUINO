@@ -61,9 +61,7 @@ const int DIRECTION_RIGHT[2] = {1, -1}; //{-1,1}
 
 bool Forward = true;
 
-//for checklist only
-bool detect_obs = false; 
-float irLB = 0;
+
 
 
 void setup() {
@@ -83,7 +81,7 @@ void setup() {
 void loop() {
   
   loopReading();
-//  put your main code here, to run repeatedly:
+  // put your main code here, to run repeatedly:
 
   //loopSensorTest();
 }
@@ -106,10 +104,6 @@ void computeDelta()
 {
     deltaM1Ticks = m1Ticks - lastM1Ticks;
     deltaM2Ticks = m2Ticks - lastM2Ticks;
-//    Serial.println("*******");
-//    Serial.println(deltaM1Ticks);
-//    Serial.println(deltaM2Ticks);
-//    Serial.println("*******");
     lastM1Ticks = m1Ticks;
     lastM2Ticks = m2Ticks;
     
