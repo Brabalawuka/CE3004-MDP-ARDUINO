@@ -61,9 +61,7 @@ const int DIRECTION_RIGHT[2] = {1, -1}; //{-1,1}
 
 bool Forward = true;
 
-//for checklist only
-bool detect_obs = false; 
-float irLB = 0;
+
 
 
 void setup() {
