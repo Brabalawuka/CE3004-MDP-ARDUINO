@@ -85,7 +85,7 @@ void loopReading(){
 
           case 's':{
             checkRawValues ();
-     
+            //checkRawValuesCali ();
             break;
           }
           
