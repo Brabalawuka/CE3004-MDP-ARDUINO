@@ -148,17 +148,10 @@ void checkRawValuesCali (){
                       +String(readIR4Cali())+";"
                       +String(readIR5Cali())
                  );
-//        Serial.println("X"+String(median(irArr1,irsampleSize))+";"
-//                      +String(median(irArr2,irsampleSize))+";"
-//                      +String(median(irArr3,irsampleSize))+";"
-//                      +String(median(irArr4,irsampleSize))+";"
-//                      +String(median(irArr5,irsampleSize))+";"
-//                      +String(median(irArr6,irsampleSize)));
-       
   }
 
 
- void checkRawValues (){
+void checkRawValues (){
 
     Serial.println("X"+String(readIR1())+";"
                       +String(readIR2())+";"
@@ -167,13 +160,7 @@ void checkRawValuesCali (){
                       +String(readIR5())+";"
                       +String(readIR6())
                  );
-//        Serial.println("X"+String(median(irArr1,irsampleSize))+";"
-//                      +String(median(irArr2,irsampleSize))+";"
-//                      +String(median(irArr3,irsampleSize))+";"
-//                      +String(median(irArr4,irsampleSize))+";"
-//                      +String(median(irArr5,irsampleSize))+";"
-//                      +String(median(irArr6,irsampleSize)));
-       
+
   }
 
 //CheckList
