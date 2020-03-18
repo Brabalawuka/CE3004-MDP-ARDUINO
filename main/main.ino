@@ -80,10 +80,10 @@ void setup() {
 
 void loop() {
   
-  loopReading();
+  //loopReading();
   // put your main code here, to run repeatedly:
 
-  //loopSensorTest();
+  loopSensorTest();
 }
 
 

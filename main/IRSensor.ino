@@ -20,7 +20,7 @@ float readIR1Cali() {
     arr[i] = analogRead(irR1);
   }
   float middle = median(arr, 20);
-  return (1/0.0000021192)/(middle +(0.008287/0.0000021192))-100 ;
+  return 7639.679695/middle-8.13793942;
 }
 float readIR2Cali() {
   float arr[20] = {};
@@ -29,7 +29,7 @@ float readIR2Cali() {
     arr[i] = analogRead(irR2);
   }
   float middle = median(arr, 20);
-  return (1/0.00000176336)/(middle +(0.008487/0.00000176336))-100 ;
+  return 7245.370852/middle-7.459382 ;
 }
 float readIR3Cali() {
   float arr[20] = {};
@@ -38,7 +38,7 @@ float readIR3Cali() {
     arr[i] = analogRead(irR3);
   }
   float middle = median(arr, 20);
-  return (1/0.000087535)/(middle +(0.01759/0.000087535))-10 ;
+  return  6396.729152/middle-6.4674028 ;
 }
 float readIR4Cali() {
   float arr[20] = {};
@@ -47,7 +47,7 @@ float readIR4Cali() {
     arr[i] = analogRead(irR4);
   }
   float middle = median(arr, 20);
-  return (1/0.00027499)/(middle +(-0.02272112/0.00027499))-5;
+  return  5408.017484/middle-7.055727513;
 }
 float readIR5Cali() {
   float arr[20] = {};
@@ -56,7 +56,7 @@ float readIR5Cali() {
     arr[i] = analogRead(irR5);
   }
   float middle = median(arr, 20);
-  return (1/0.00002389)/(middle +(0.01843/0.00002389))-30;
+  return 5163.974847/middle-7.272009122;
 }
   
 float readIR6Cali() {
@@ -66,7 +66,7 @@ float readIR6Cali() {
     arr[i] = analogRead(irR6);
   }
   float middle = median(arr, 20);
-  return (1/0.0002415)/(middle +(0.01831/0.00002415))-30;
+  return 6506.84523/middle-6.2879815;
 }
 
 
@@ -80,7 +80,7 @@ float readIR1() {
     arr[i] = analogRead(irR1);
   }
   float middle = median(arr, 30);
-  return (1/0.00017375)/(middle +(-0.0026447/0.00017375))-5 ;
+  return 6506.84523/middle-6.2879815 ;
 }
 
 
@@ -91,7 +91,7 @@ float readIR2() {
     arr[i] = analogRead(irR2);
   }
   float middle = median(arr, 30);
-  return (1/0.000172)/(middle +(0.004298/0.000172))- 4.5 ;
+  return  4503.673/middle-1.7623;
 }
 
  
@@ -102,7 +102,7 @@ float readIR3() {
     arr[i] = analogRead(irR3);
   }
   float middle = median(arr, 30);
-  return (1/0.000233)/(middle +(-0.01309/0.000233))- 3.5 ;
+  return 7086.289029/middle-8.76717515 ;
 }
 
 
@@ -116,7 +116,7 @@ float readIR4() {
   if (middle >= 490){
     return (600 - middle)/10;
     }
-  return (1/0.000213)/(middle +(-0.00443/0.000213))-6 ;
+  return 5736.875018/middle-8.173388232 ;
 }
 
 float readIR5() {
@@ -126,7 +126,8 @@ float readIR5() {
     arr[i] = analogRead(irR5);
   }
   float middle = median(arr, 30);
-  return (1/0.000265)/(middle +(-0.01166/0.000265))-5;
+  return 6222.375402/middle-10.97077133
+;
 }
 
 float readIR6() {
@@ -136,7 +137,12 @@ float readIR6() {
     arr[i] = analogRead(irR6);
   }
   float middle = median(arr, 30);
-  return (1/0.00004292)/(middle +(0.003483/0.00004292))-30 ;
+  if(middle < 470)
+    return 13208.4563/middle-13.22363189;
+  else
+    return 23580.59709/middle-34.96770086;
+
+;
 }
 
 
