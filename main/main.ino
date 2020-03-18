@@ -81,7 +81,7 @@ void setup() {
 void loop() {
   
   loopReading();
-  // put your main code here, to run repeatedly:
+//  put your main code here, to run repeatedly:
 
   //loopSensorTest();
 }
