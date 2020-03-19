@@ -2,9 +2,10 @@ void caliNew() // Do this in an unknown scenario
 { 
   float ir1reading, ir2reading, ir3reading;
   
-  move(convertLeftAngleToTicks(90), DIRECTION_LEFT); // rotate left
-  caliFront();
-  move(convertRightAngleToTicks(90), DIRECTION_RIGHT);//rotate right
+//  move(convertLeftAngleToTicks(90), DIRECTION_LEFT); // rotate left
+//  caliFront();
+//  move(convertRightAngleToTicks(90), DIRECTION_RIGHT);//rotate right
+  caliLeft();
 
   ir1reading = readIR1Cali();
   ir2reading = readIR2Cali();
@@ -80,8 +81,8 @@ void caliLeft(){
     move(convertLeftAngleToTicks(90), DIRECTION_LEFT);
     caliFront();
     move(convertRightAngleToTicks(90), DIRECTION_RIGHT);//rotate right
-    delay(200);
-//    caliLeftAlignmnet();
+    delay(100);
+    caliLeftAlignmnet();
   }
   
   
@@ -163,7 +164,7 @@ void caliFrontAlignment(){
   
 
   //using Front left and Front right sensors
-  while ((abs(ir_diff) > 0.2) )//gg to enter loop as long as there is a difference btw the 2 front  && not(tried_left && tried_right) sensors 
+  while ((abs(ir_diff) > 0.2) && not(tried_left && tried_right))//gg to enter loop as long as there is a difference btw the 2 front   sensors 
   {
     
     if (ir_diff < -0.2) //if my ir1 is closer to the wall, then we move on the left
@@ -193,7 +194,7 @@ void caliLeftAlignmnet(){
   float ir_diff = readIR5Cali() - readIR4Cali();
 
   // using Right front and right back sensors
-  while (abs(ir_diff) > 0.3)
+  while (abs(ir_diff) > 0.3 && not(tried_left && tried_right))
   {
 
     //delay(10);
@@ -252,8 +253,8 @@ void caliDistanceUsingSensor(int number) //Using IR1 IR2 IR3
 {
   bool tried_front = false;
   bool tried_back = false;
-  float distNear = 4.9;
-  float distFar = 5.1;
+  float distNear = 4.4;
+  float distFar = 4.8;
   float error = 0.3;
 
   float irreading;
@@ -264,7 +265,7 @@ void caliDistanceUsingSensor(int number) //Using IR1 IR2 IR3
    }
 
 
-  while( (abs(irreading- 5.0)> error) && not(tried_front && tried_back)){ //will stop when when IR reading is within error && both (tried_front & tried_back are true).
+  while( (abs(irreading - 4.6)> error) && not(tried_front && tried_back)){ //will stop when when IR reading is within error && both (tried_front & tried_back are true).
 
     if (irreading < distNear) // so if the distance from the front is < than 5cm, we move backward
     {
