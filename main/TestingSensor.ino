@@ -15,19 +15,19 @@ void loopSensorTest(){
 //w
 
 
-//  for(i=0; i<200; i++){
-//    arr[i] = analogRead(irR4);
-//  }
-//  middle = median(arr, 200);
-//  Serial.print("4: ");
-//  Serial.println(middle);
-//
-//  for(i=0; i<200; i++){
-//    arr[i] = analogRead(irR5);
-//  }
-//  middle = median(arr, 200);
-//  Serial.print("5: ");
-//  Serial.println(middle);
+  for(i=0; i<200; i++){
+    arr[i] = analogRead(irR4);
+  }
+  middle = median(arr, 200);
+  Serial.print("4: ");
+  Serial.println(middle);
+
+  for(i=0; i<200; i++){
+    arr[i] = analogRead(irR5);
+  }
+  middle = median(arr, 200);
+  Serial.print("5: ");
+  Serial.println(middle);
   
 
   for(i=0; i<200; i++){

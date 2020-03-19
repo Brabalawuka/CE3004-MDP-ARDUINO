@@ -24,7 +24,7 @@ double computePID() {   //Proportional, Integral,Derivative.
 //  Serial.println(d);
 //  Serial.println("-----------");
   
-  pid = i;
+  pid = p + i;
   
   lastError = error;
 

@@ -70,14 +70,21 @@ void caliLeft(){
   ir4Reading = readIR4Cali();
   ir5Reading = readIR5Cali();
 
+  caliLeftAlignmnet();
+  
+  ir4Reading = readIR4Cali();
+  ir5Reading = readIR5Cali();
+
   if(ir5Reading <= 4.5 || ir5Reading >= 5.5 || ir4Reading >= 5.5 || ir4Reading <= 4.5)
   {
     move(convertLeftAngleToTicks(90), DIRECTION_LEFT);
     caliFront();
     move(convertRightAngleToTicks(90), DIRECTION_RIGHT);//rotate right
+    delay(200);
+//    caliLeftAlignmnet();
   }
-  caliLeftAlignmnet();
-
+  
+  
 }
 
 void caliFront() //check if it is parallel to my front wall using sensors (IR2 & IR6)
@@ -156,10 +163,10 @@ void caliFrontAlignment(){
   
 
   //using Front left and Front right sensors
-  while ((abs(ir_diff) > 0.2) && not(tried_left && tried_right))//gg to enter loop as long as there is a difference btw the 2 front sensors 
+  while ((abs(ir_diff) > 0.2) )//gg to enter loop as long as there is a difference btw the 2 front  && not(tried_left && tried_right) sensors 
   {
     
-    if (ir_diff < 0.3) //if my ir1 is closer to the wall, then we move on the left
+    if (ir_diff < -0.2) //if my ir1 is closer to the wall, then we move on the left
     {
       //left adjustment
       moveWithSpeed(convertLeftAngleToTicks(0.2), DIRECTION_LEFT, 200); //move left
@@ -186,18 +193,18 @@ void caliLeftAlignmnet(){
   float ir_diff = readIR5Cali() - readIR4Cali();
 
   // using Right front and right back sensors
-  while (abs(ir_diff) > 0.2 && not(tried_left && tried_right))
+  while (abs(ir_diff) > 0.3)
   {
 
     //delay(10);
 
-    if (ir_diff < 0.3) //if my ir4 is closer to the wall, then we move on the left
+    if (ir_diff < -0.3) //if my ir4=5 is closer to the wall, then we move on the left
     {
       //left
       moveWithSpeed(convertLeftAngleToTicks(0.2), DIRECTION_LEFT, 200);
       tried_left = true;
     }
-    else if (ir_diff > 0.2) //if my ir5 is closer to the wall, then we move on the right
+    else if (ir_diff > 0.3) //if my ir4 is closer to the wall, then we move on the right
     {
       //right
       moveWithSpeed(convertRightAngleToTicks(0.2), DIRECTION_RIGHT, 200);
