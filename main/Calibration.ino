@@ -91,7 +91,7 @@ void caliLeft(){
 void caliFront() //check if it is parallel to my front wall using sensors (IR2 & IR6)
 {
   
-  caliFrontAlignment();
+  
 //  float ir1reading, ir2reading, ir3reading;
 //  ir1reading = readIR1Cali();
 //  ir2reading = readIR2Cali();
@@ -107,7 +107,13 @@ void caliFront() //check if it is parallel to my front wall using sensors (IR2 &
 //  {
 //    caliDistanceUsingSensor(3);
 //  }
+
   caliDistance();
+ 
+  caliFrontAlignment();
+
+  caliDistance();
+  caliFrontAlignment();
 //  caliAlignment();
 
 }
@@ -123,8 +129,8 @@ void caliDistance()
 {
   bool tried_front = false;
   bool tried_back = false;
-  float dist = 4.9;
-  float error = 0.4;
+  float dist = 5.0;
+  float error = 0.3;
 
   float ir1reading, ir3reading;
   ir1reading = readIR1Cali();
@@ -134,15 +140,14 @@ void caliDistance()
     while( ( (abs(ir1reading - dist)> error)  || (abs(ir3reading- dist)> error) ) //first checking if there is a difference and there is a need to calibrate
            && not(tried_front && tried_back)){ //will stop when when IR reading is within error && both (tried_front & tried_back are true).
 
-    if (ir1reading < dist || ir3reading < dist) // so if the distance from the front is < than 5cm, we move backward
+    if (ir1reading < (dist-0.2) || ir3reading < (dist-0.2)) // so if the distance from the front is < than 5cm, we move backward
     {
       moveWithSpeed(convertDistanceToTicks(0.2),   DIRECTION_BACKWARD, 200);
       ir1reading = readIR1Cali();
-    
       ir3reading = readIR3Cali();
       tried_front = true;
     }
-    else if (ir1reading > dist && ir3reading > dist) // so if the distannce front is > than 5 cm, we move forward
+    else if (ir1reading > (dist+0.2) || ir3reading > (dist+0.2)) // so if the distannce front is > than 5 cm, we move forward
     {
       moveWithSpeed(convertDistanceToTicks(0.2),DIRECTION_FORWARD, 200);
       ir1reading = readIR1Cali();
@@ -153,7 +158,7 @@ void caliDistance()
   }
 }
 
-//Calibrite the alignment to front walls using front sensors
+
 void caliFrontAlignment(){
 
 

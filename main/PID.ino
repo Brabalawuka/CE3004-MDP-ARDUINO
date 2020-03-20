@@ -1,5 +1,5 @@
-const double KP = 4;
-const double KI = 5;
+const double KP = 2;
+const double KI = 4;
 const double KD = 0.1;
 
 
