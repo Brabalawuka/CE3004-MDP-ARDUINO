@@ -1,12 +1,12 @@
 /*
 
-  34 5 6
-  2[][][]
-  [][][]
-  1[][][]
+   1 2 3 6
+  4[][][]
+   [][][]
+  5[][][]
 
-  Short Sensor - 1,2,3,5,6
-  Long Sensor - 4
+  Short Sensor - 1,2,3,4,5
+  Long Sensor - 6
 
 */
 float leftwall_ir45() {
@@ -166,20 +166,7 @@ void checkRawValues () {
 
 }
 
-//CheckList
 
-//collects samples for ir Array
-//void irSamples(int maxnum) {
-//  for (int i = 0; i < maxnum; i++) {
-//    irArr1[i] = analogRead(irR1);
-//    irArr2[i] = readIR2();
-//    irArr3[i] = readIR3();
-//    irArr4[i] = readIR4();
-//    irArr5[i] = readIR5();
-//    irArr6[i] = readIR6();
-//    delay(5);
-//  }
-//}
 ///////////////////////////////////////////////////////////////
 /*Sorting*/
 

@@ -51,47 +51,46 @@ void loopReading(){
         distance = inString.toInt();
         switch(cmd){
           case 'f':{
-            move(convertDistanceToTicks(distance),  DIRECTION_FORWARD);
-            //moveWithSpeed(convertDistanceToTicks(distance),  DIRECTION_FORWARD, 150);
-
+            if (distance > 10)
+            {
+              movewithfeedback(convertDistanceToTicks(distance),  DIRECTION_FORWARD);
+            }
+            else
+            {
+              move(convertDistanceToTicks(distance),  DIRECTION_FORWARD, false);
+            }
             Serial.println("Xdone");
             break;
           }
           case 'F':{
-            move(convertDiagDistanceToTicks(distance),  DIRECTION_FORWARD);
-            //moveWithSpeed(convertDistanceToTicks(distance),  DIRECTION_FORWARD, 150);
-
+            move(convertDiagDistanceToTicks(distance),  DIRECTION_FORWARD, false);
             Serial.println("Xdone");
             break;
           }
           case 'b':{
-            move(convertDistanceToTicks(distance),   DIRECTION_BACKWARD);
+            move(convertDistanceToTicks(distance),   DIRECTION_BACKWARD, false);
             Serial.println("Xdone");
-            
             break;
           }
           case 'l':{
-            move(convertLeftAngleToTicks(distance), DIRECTION_LEFT);
+            move(convertLeftAngleToTicks(distance), DIRECTION_LEFT, false);
             Serial.println("Xdone");
             
             break;
           }
           case 'r':{
-            move(convertRightAngleToTicks(distance), DIRECTION_RIGHT);
+            move(convertRightAngleToTicks(distance), DIRECTION_RIGHT, false);
             Serial.println("Xdone");
-            
             break;
           }
 
           case 's':{
             checkRawValues ();
-            //checkRawValuesCali ();
             break;
           }
           
           case 'm':{
             checkRawValuesCali ();
-          
             break;
           }
 
@@ -121,39 +120,32 @@ void loopReading(){
             Serial.println("Xdone");
             break;
           }
-
-//          case 'k':{
-//            diagnalAvoid(DIRECTION_FORWARD);
-//            Serial.println("Xdone");
-//            
-//            break;
-//          }
-          case 'k':{
-            moveWithSpeed(convertDiagDistanceToTicks(distance), DIRECTION_FORWARD, 100);
-            Serial.println("Xdone");
-            
-            break;
-          }
-//
-//          case 'i':{
-//             caliFrontLeft();
-//             Serial.println("Xdone");
-//            
-//            break;
-//          }
-//
           case 'o':{
             caliFront();
             Serial.println("Xdone");
             break;
-          }
-
-         
-          
-//          case 'g':{
-//            glideforward(convertDistanceToTicks(distance), DIRECTION_FORWARD);
-//            break;
-//         }
+          }          
+          case 'g':{
+            glideforwarddistance(convertDistanceToTicks(distance));
+            Serial.println("Xdone");
+            break;
+         }
+         case 'h':{
+            glidebackwarddistance(convertDistanceToTicks(distance));
+            Serial.println("Xdone");
+            break;
+         }
+         case 'j':{
+            glideforwardtillwall_exp();
+            Serial.println("Xdone");
+            break;
+         }
+         case 'k':{
+            glideforwardtillwall_fp();
+            caliFront();
+            Serial.println("Xdone");
+            break;
+         }
         }
        
         // clear the string for new input:

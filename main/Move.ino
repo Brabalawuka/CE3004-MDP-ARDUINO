@@ -1,267 +1,278 @@
-int move(double ticks, const int direction[2]) 
+int move(double ticks, const int direction[2], const bool slow) 
 {
     resetGlobalConstants();
-    double pid = 0;
+    double p = 0;
     double brakingOffset = 0;
-    double startingOffset = 0;
+    double base_speedL, base_speedR;
+    if (slow == true)
+    {
+      base_speedL = SPEED_L_SLOW;
+      base_speedR = SPEED_R_SLOW;
+    }
+    else
+    {
+      base_speedL = SPEED_L;
+      base_speedR = SPEED_R;
+    }
 
-
-    //md.setSpeeds((SPEED + pid) * direction[0]  , (SPEED - pid) * direction[1]);
     while (m1Ticks <= ticks)
     {   
+        p = computeP();
 
-        computeDelta();
-        pid = computePID();
+        double difference = ticks - m1Ticks;
+        double speedL, speedR;
+        
+        if ( difference < 100) {
+          brakingOffset = difference / 100;
+          speedL = (base_speedL + p)* brakingOffset * direction[0];
+          speedR = (base_speedR - p)* brakingOffset * direction[1];
+        } else {
+          speedL = (base_speedL + p) * direction[0];
+          speedR = (base_speedR - p) * direction[1];
+        }
+        md.setSpeeds(speedL , speedR );
+    }
+    md.setBrakes(400, 400);
+    delay(50);
+    return 1;
+}
+
+int movewithfeedback(double ticks, const int direction[2]) 
+{
+    resetGlobalConstants();
+    double p = 0;
+    double brakingOffset = 0;
+    int tick_increment = (int)round(convertDistanceToTicks(10));
+    int tick_threshold = tick_increment;
+
+    while (m1Ticks <= ticks)
+    {   
+        if (m1Ticks >= tick_threshold)
+        {
+          Serial.println("X"
+                 + String(readIR4()) + ";"
+                 + String(readIR6())
+                );
+          tick_threshold = tick_threshold + tick_increment;
+        }
+        
+        p = computeP();
+
+        double difference = ticks - m1Ticks;
+        double speedL, speedR;
+        
+        if ( difference < 100) {
+          brakingOffset = difference / 100;
+          speedL = (SPEED_L + p)* brakingOffset * direction[0];
+          speedR = (SPEED_R - p)* brakingOffset * direction[1];
+        } else {
+          speedL = (SPEED_L + p) * direction[0];
+          speedR = (SPEED_R - p) * direction[1];
+        }
+        md.setSpeeds(speedL , speedR );
+    }
+
+    if ((m1Ticks % tick_increment) > (tick_increment/2.0))
+    {
+      // Have not sent sensor data for the last 10cm
+      Serial.println("X"
+             + String(readIR4()) + ";"
+             + String(readIR6())
+            );
+    }
+    
+    md.setBrakes(400, 400);
+    delay(50);
+    return 1;
+}
+
+
+int moveTillEnd() 
+{
+    // Only used for fastest path
+    resetGlobalConstants();
+    double p = 0;
+    double threshold = 8;
+    float ir1reading, ir2reading, ir3reading;
+    
+    while (true)
+    {   
+        p = computeP();
+       
+        md.setSpeeds((SPEED_L + p) * DIRECTION_FORWARD[0], (SPEED_R - p) * DIRECTION_FORWARD[1]);
+        ir1reading = readIR1(); //taking reading
+        ir2reading = readIR2(); //taking reading
+        ir3reading = readIR3(); //taking reading
+        if(ir1reading < threshold){
+          break;
+        }
+        else if(ir2reading < threshold){
+          break;
+        }
+        else if(ir3reading < threshold){
+          break;
+        }
+    }
+    md.setBrakes(400, 400);
+    delay(20);
+    return 1;
+}
+
+int moveTillLeftEnd() 
+{
+    // Only used for exploration
+    resetGlobalConstants();
+    double p = 0;
+    double threshold = 10;
+    float ir4reading;
+    
+    while (true)
+    {   
+        p = computeP();
+       
+        md.setSpeeds((SPEED_L_SLOW + p) * DIRECTION_FORWARD[0], (SPEED_R_SLOW - p) * DIRECTION_FORWARD[1]);
+        ir4reading = readIR4Cali(); //taking reading
+        if(ir4reading > threshold){
+          break;
+        }
+    }
+    md.setBrakes(400, 400);
+    delay(20);
+    return 1;
+}
+
+int glideforwardtillwall_exp() 
+{
+    // Only used for exploration 
+    resetGlobalConstants();
+    double p = 0;
+    double threshold = 8;
+    int tick_increment = (int)round(convertDistanceToTicks(10));
+    int tick_threshold = tick_increment;
+    float ir1reading, ir2reading, ir3reading;
+
+    while (true)
+    {   
+        if (m1Ticks >= tick_threshold)
+        {
+          Serial.println("X"
+                 + String(readIR4()) + ";"
+                 + String(readIR6())
+                );
+          tick_threshold = tick_threshold + tick_increment;
+        }
+        
+        p = computeir4P();
+       
+        md.setSpeeds((SPEED_L + p) * DIRECTION_FORWARD[0], (SPEED_R - p) * DIRECTION_FORWARD[1]);
+        ir1reading = readIR1(); //taking reading
+        ir2reading = readIR2(); //taking reading
+        ir3reading = readIR3(); //taking reading
+        if(ir1reading < threshold){
+          break;
+        }
+        else if(ir2reading < threshold){
+          break;
+        }
+        else if(ir3reading < threshold){
+          break;
+        }
+    }
+
+    if ((m1Ticks % tick_increment) > (tick_increment/2.0))
+    {
+      // Have not sent sensor data for the last 10cm
+      Serial.println("X"
+             + String(readIR4()) + ";"
+             + String(readIR6())
+            );
+    }
+    
+    md.setBrakes(400, 400);
+    delay(20);
+    return 1;
+}
+
+int glideforwardtillwall_fp() 
+{
+    // Only used for fastest path 
+    resetGlobalConstants();
+    double p = 0;
+    double threshold = 8;
+    float ir1reading, ir3reading;
+
+    while (true)
+    {   
+        p = computeir4P();
+       
+        md.setSpeeds((SPEED_L + p) * DIRECTION_FORWARD[0], (SPEED_R - p) * DIRECTION_FORWARD[1]);
+        ir1reading = readIR1(); //taking reading
+        ir3reading = readIR3(); //taking reading
+        if(ir1reading < threshold){
+          break;
+        }
+        else if(ir3reading < threshold){
+          break;
+        }
+    }
+    
+    md.setBrakes(400, 400);
+    delay(20);
+    return 1;
+}
+
+int glideforwarddistance(double ticks)
+{
+    // Only used for fastest path
+    resetGlobalConstants();
+    double p = 0;
+    double brakingOffset = 0;
+
+    while (m1Ticks <= ticks)
+    {   
+        p = computeir4P();
 
         double difference = ticks - m1Ticks;
         double speedLeft, speedRight, speedL, speedR;
-        speedLeft = (SPEED + pid)* brakingOffset * direction[0];
-        speedRight = (SPEED - pid)* brakingOffset * direction[1];
-        speedL = (SPEED + pid) * direction[0];
-        speedR = (SPEED - pid) * direction[1];
-
         if ( difference < 100) {
           brakingOffset = difference / 100;
-          md.setSpeeds(speedLeft, speedRight);
+          speedL = (SPEED_L + p)* brakingOffset * DIRECTION_FORWARD[0];
+          speedR = (SPEED_R - p)* brakingOffset * DIRECTION_FORWARD[1];
         } else {
-          md.setSpeeds(speedL , speedR );
+          speedL = (SPEED_L + p) * DIRECTION_FORWARD[0];
+          speedR = (SPEED_R - p) * DIRECTION_FORWARD[1];
         }
-           
-//             Serial.println("printing number of ticks");       
-//             Serial.println(m1Ticks);
-//             Serial.println(m2Ticks);
-    
+        md.setSpeeds(speedL , speedR );
     }
     md.setBrakes(400, 400);
- //    the number of ticks output here should be the same for each motor
-//    Serial.print("#final m1ticks: ");
-//    Serial.print(m1Ticks);
-//    Serial.print(" #final m2ticks: ");
-//    Serial.println(m2Ticks);
-
-   // Serial.print("# final m2ticks after delay: ");
-   // Serial.println(m2ticks);
-
-//    Serial.print("#sum of deltaM1Ticks: ");
-//    Serial.print(sumOfDeltaM1);
-//    Serial.print("# sum of deltaM2Ticks: ");
-//    Serial.println(sumOfDeltaM2);
-
     delay(50);
-
     return 1;
 }
 
-
-int moveWithSpeed(double ticks, const int direction[2], int speed) 
+int glidebackwarddistance(double ticks)
 {
+    // Only used for fastest path
     resetGlobalConstants();
-    double pid = 0;
-
-
-    md.setSpeeds((speed + pid) * direction[0]  , (speed - pid) * direction[1]);
-    while (m1Ticks <= ticks && Forward)
-    {   
-
-        computeDelta();
-        pid = computePID();
-
-        //Serial.println();       
-    }
-    md.setBrakes(400, 400);
-
-    delay(10);
-
-    return 1;
-}
-
-
-
-int moveTillEnd(const int direction[2]) 
-{
-    resetGlobalConstants();
-    double pid = 0;
+    double p = 0;
     double brakingOffset = 0;
-    double startingOffset = 0;
-    double dist = 8;
-    float ir1reading, ir3reading;
 
-
-    //md.setSpeeds((SPEED + pid) * direction[0]  , (SPEED - pid) * direction[1]);
-    while (Forward)
+    while (m1Ticks <= ticks)
     {   
+        p = computeir5P();
 
-        computeDelta();
-        pid = computePID();
-       
-
-        if (m1Ticks < 30){
-          md.setSpeeds((SPEED - 150 + 5 * m1Ticks) * direction[0], (SPEED- 150 + 5 * m1Ticks) * direction[1]);
-        }  else {
-          md.setSpeeds((SPEED + pid) * direction[0], (SPEED - pid) * direction[1]);
+        double difference = ticks - m1Ticks;
+        double speedLeft, speedRight, speedL, speedR;
+        if ( difference < 100) {
+          brakingOffset = difference / 100;
+          speedL = (SPEED_L + p)* brakingOffset * DIRECTION_BACKWARD[0];
+          speedR = (SPEED_R - p)* brakingOffset * DIRECTION_BACKWARD[1];
+        } else {
+          speedL = (SPEED_L + p) * DIRECTION_BACKWARD[0];
+          speedR = (SPEED_R - p) * DIRECTION_BACKWARD[1];
         }
-
-         ir1reading = readIR1(); //taking reading
-         ir3reading = readIR3(); //taking reading
-
-         if(ir1reading < dist && ir3reading < dist){
-          break;
-         }
-
+        md.setSpeeds(speedL , speedR );
     }
     md.setBrakes(400, 400);
-    delay(20);
+    delay(50);
     return 1;
 }
-
-int moveTillLeftEnd(const int direction[2], int speed) 
-{
-    resetGlobalConstants();
-    double pid = 0;
-    double brakingOffset = 0;
-    double startingOffset = 0;
-    double dist = 9;
-    float ir4reading;
-
-
-    //md.setSpeeds((speed + pid) * direction[0]  , (speed - pid) * direction[1]);
-    while (true)
-    {   
-        computeDelta();
-        pid = computePID();
-       
-        md.setSpeeds((speed + pid) * direction[0], (speed - pid) * direction[1]);
-        ir4reading = readIR4(); //taking reading
-        if(ir4reading > dist){
-          break;
-        }
-    }
-    md.setBrakes(400, 400);
-    delay(20);
-    return 1;
-}
-
-
-
-
-//int glideforward(double ticks, const int direction[2]) 
-//{
-//  
-//    resetGlobalConstants();
-//    double pid = 0;
-//    double brakingOffset = 0;
-//    double startingOffset = 0;
-//    double dist = 9;
-//    float ir1reading, ir3reading;
-//
-//     
-//    ir1reading = readIR1Cali();
-//    ir3reading = readIR3Cali();
-//
-//
-//    //md.setSpeeds((SPEED + pid) * direction[0]  , (SPEED - pid) * direction[1]);
-//    while (m1Ticks <= ticks)
-//    {   
-//
-//        computeDelta();
-//        pid = computePID();
-//        double difference = ticks - m1Ticks;
-//
-//
-//        if (m1Ticks < 50){
-//          md.setSpeeds((SPEED - 150 + 3 * m1Ticks) * direction[0], (SPEED- 150 + 3 * m1Ticks) * direction[1]);
-//        } else if ( difference < 100) {
-//          brakingOffset = difference / 100;
-//          md.setSpeeds((SPEED + pid)* brakingOffset * direction[0], (SPEED - pid)* brakingOffset * direction[1]);
-//          //md.setBrakes(200, 200);
-//        } else {
-//          if (m1Ticks > 300 && abs(ir1reading-ir3reading) >= 0.4) 
-//          {
-//              if(ir3reading <5 || ir1reading<5) //need to move to the right, give more power to left motor
-//                {
-//                  md.setSpeeds((SPEED + pid + 10) * direction[0], (SPEED - pid - 10) * direction[1]);
-//                
-//                }
-//                else if(  ir3reading>5 || ir1reading>5)//need to move to the left,
-//                {
-//                  md.setSpeeds((SPEED + pid - 10) * direction[0], (SPEED - pid + 10) * direction[1]);
-//                }else { md.setSpeeds((SPEED + pid) * direction[0], (SPEED - pid) * direction[1]);}
-//                
-//          } else //when ticks are smaller than 300
-//          {
-//            md.setSpeeds((SPEED + pid) * direction[0], (SPEED - pid) * direction[1]);
-//          }
-//        }
-//
-//         ir1reading = readIR1Cali(); //taking reading
-//         ir3reading = readIR3Cali(); //taking reading
-//          
-//         }
-//   
-//    md.setBrakes(400, 400);
-//
-//    delay(20);
-//
-//    return 1;
-//}
-//
-//
-//
-//
-//
-//
-//
-//int diagnalAvoid(const int direction[2]){
-//
-//    resetGlobalConstants();
-//    double pid = 0;
-//    double brakingOffset = 0;
-//    double startingOffset = 0;
-//    double dist =17;
-//    float ir5reading;
-//  
-//
-//    //md.setSpeeds((SPEED + pid) * direction[0]  , (SPEED - pid) * direction[1]);
-//    while (true)
-//    {   
-//
-//        computeDelta();
-//        pid = computePID();
-//       
-//
-//        if (m1Ticks < 30){
-//          md.setSpeeds((SPEED - 150 + 5 * m1Ticks) * direction[0], (SPEED- 150 + 3 * m1Ticks) * direction[1]);
-//        }  else {
-//          md.setSpeeds((SPEED + pid) * direction[0], (SPEED - pid) * direction[1]);
-//        }
-//
-//         ir5reading = readIR5(); //taking reading
-//        
-//         if(ir5reading < dist){
-//          break;
-//         }
-//      
-//    
-//    }
-//    md.setBrakes(400, 400);
-//
-//    delay(20);
-//
-//    move(convertRightAngleToTicks(45), DIRECTION_RIGHT);
-//    move(convertDiagDistanceToTicks(30),  DIRECTION_FORWARD);
-//    move(convertLeftAngleToTicks(90), DIRECTION_LEFT);
-//    move(convertDiagDistanceToTicks(30),  DIRECTION_FORWARD);
-//    move(convertRightAngleToTicks(45), DIRECTION_RIGHT);
-//    moveTillEnd(DIRECTION_FORWARD);
-//
-////    move(convertLeftAngleToTicks(45), DIRECTION_LEFT);
-////    move(convertDiagDistanceToTicks(30),  DIRECTION_FORWARD);
-////    move(convertRightAngleToTicks(90), DIRECTION_RIGHT);
-////    move(convertDiagDistanceToTicks(30),  DIRECTION_FORWARD);
-////    move(convertLeftAngleToTicks(45), DIRECTION_LEFT);
-////    moveTillEnd(DIRECTION_FORWARD);
-////    
-//
-//  
-//  
-//  }

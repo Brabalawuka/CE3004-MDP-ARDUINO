@@ -2,6 +2,47 @@ const double KP = 2;
 const double KI = 4;
 const double KD = 0.1;
 
+double computeP() {   //Proportional only 
+  double p, error;   
+  error = m1Ticks - m2Ticks;
+
+  p = KP * error;
+
+  //Return P that is within 50<-->-50range
+  p = max(p, -50);
+  p = min(p, 50);
+  
+  return p;
+}
+
+double computeir4P() {   //Proportional only, use ir4 as error
+  double p, error, ir4_KP; 
+  ir4_KP = 20;  
+  error = 5.0 - readIR4Cali();
+
+  p = ir4_KP * error;
+
+  //Return P that is within 50<-->-50range
+  p = max(p, -50);
+  p = min(p, 50);
+  
+  return p;
+}
+
+double computeir5P() {   //Proportional only, use ir5 as error
+  double p, error, ir5_KP; 
+  ir5_KP = 20;  
+  error = 5.0 - readIR5Cali();
+
+  p = ir5_KP * error;
+
+  //Return P that is within 50<-->-50range
+  p = max(p, -50);
+  p = min(p, 50);
+  
+  return p;
+}
+
 
 
 
@@ -39,7 +80,4 @@ double computePID() {   //Proportional, Integral,Derivative.
   else{
     return pid;
     }
-
- 
-  
 }

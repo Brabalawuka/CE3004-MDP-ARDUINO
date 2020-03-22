@@ -1,10 +1,7 @@
 void caliNew() // Do this in an unknown scenario
 { 
   float ir1reading, ir2reading, ir3reading;
-  
-//  move(convertLeftAngleToTicks(90), DIRECTION_LEFT); // rotate left
-//  caliFront();
-//  move(convertRightAngleToTicks(90), DIRECTION_RIGHT);//rotate right
+
   caliLeft();
 
   ir1reading = readIR1Cali();
@@ -29,8 +26,8 @@ void caliNew() // Do this in an unknown scenario
 void caliEdge() //when there is a wall on the the left and you want the robot to be in the middle
 {
    caliLeft();
-   moveTillLeftEnd(DIRECTION_FORWARD, 200);
-   moveWithSpeed(convertDistanceToTicks(7.4),   DIRECTION_BACKWARD, 200); // moving backward by 9cm when IR3 senses dist > 10cm  
+   moveTillLeftEnd();
+   move(convertDistanceToTicks(7.4), DIRECTION_BACKWARD, true); // moving backward by 7.4cm when IR4 senses dist > 10cm  
    caliLeft(); //check left allignment   
  
 }
@@ -47,7 +44,7 @@ void caliForwardtoWall() // move until got wall in front
 
   if(ir1reading > dist && ir3reading > dist) // checking if there is a need for me to move first
   {
-    moveTillEnd( DIRECTION_FORWARD); //move
+    moveTillEnd(); //move
   }
   caliFront();    
 }
@@ -55,11 +52,11 @@ void caliForwardtoWall() // move until got wall in front
 
 void caliLeftBack() // Do this when there is wall on the left and back
 {
-  move(convertLeftAngleToTicks(180), DIRECTION_LEFT); // rotate left
+  move(convertLeftAngleToTicks(180), DIRECTION_LEFT, false); // rotate left
   caliFront();
-  move(convertRightAngleToTicks(90), DIRECTION_RIGHT);//rotate right
+  move(convertRightAngleToTicks(90), DIRECTION_RIGHT, false);//rotate right
   caliFront();
-  move(convertRightAngleToTicks(90), DIRECTION_RIGHT);
+  move(convertRightAngleToTicks(90), DIRECTION_RIGHT, false);
   caliLeftAlignmnet();
 
 }
@@ -78,9 +75,9 @@ void caliLeft(){
 
   if(ir5Reading <= 4.5 || ir5Reading >= 5.5 || ir4Reading >= 5.5 || ir4Reading <= 4.5)
   {
-    move(convertLeftAngleToTicks(90), DIRECTION_LEFT);
+    move(convertLeftAngleToTicks(90), DIRECTION_LEFT, true);
     caliFront();
-    move(convertRightAngleToTicks(90), DIRECTION_RIGHT);//rotate right
+    move(convertRightAngleToTicks(90), DIRECTION_RIGHT, true);//rotate right
     delay(100);
     caliLeftAlignmnet();
   }
@@ -90,32 +87,12 @@ void caliLeft(){
 
 void caliFront() //check if it is parallel to my front wall using sensors (IR2 & IR6)
 {
-  
-  
-//  float ir1reading, ir2reading, ir3reading;
-//  ir1reading = readIR1Cali();
-//  ir2reading = readIR2Cali();
-//  ir3reading = readIR3Cali();
-//  
-//  if(ir1reading < ir3reading && ir1reading < ir2reading)
-//  {
-//    caliDistanceUsingSensor(1);
-//  }else if(ir2reading < ir1reading && ir2reading < ir3reading)
-//  {
-//    caliDistanceUsingSensor(2);
-//  }else if(ir3reading < ir1reading && ir3reading < ir2reading)
-//  {
-//    caliDistanceUsingSensor(3);
-//  }
-
   caliDistance();
  
   caliFrontAlignment();
 
   caliDistance();
   caliFrontAlignment();
-//  caliAlignment();
-
 }
 
 
@@ -142,19 +119,16 @@ void caliDistance()
 
     if (ir1reading < (dist-0.2) || ir3reading < (dist-0.2)) // so if the distance from the front is < than 5cm, we move backward
     {
-      moveWithSpeed(convertDistanceToTicks(0.2),   DIRECTION_BACKWARD, 200);
-      ir1reading = readIR1Cali();
-      ir3reading = readIR3Cali();
+      move(convertDistanceToTicks(0.2), DIRECTION_BACKWARD, true);
       tried_front = true;
     }
     else if (ir1reading > (dist+0.2) || ir3reading > (dist+0.2)) // so if the distannce front is > than 5 cm, we move forward
     {
-      moveWithSpeed(convertDistanceToTicks(0.2),DIRECTION_FORWARD, 200);
-      ir1reading = readIR1Cali();
-    
-      ir3reading = readIR3Cali();
+      move(convertDistanceToTicks(0.2),DIRECTION_FORWARD, true);
       tried_back = true;
     }
+    ir1reading = readIR1Cali();
+    ir3reading = readIR3Cali();
   }
 }
 
@@ -175,13 +149,13 @@ void caliFrontAlignment(){
     if (ir_diff < -0.2) //if my ir1 is closer to the wall, then we move on the left
     {
       //left adjustment
-      moveWithSpeed(convertLeftAngleToTicks(0.2), DIRECTION_LEFT, 200); //move left
+      move(convertLeftAngleToTicks(0.2), DIRECTION_LEFT, true); //move left
       tried_left = true;
     }
     else if (ir_diff > 0.2) // if my ir3 is closer to the wall, then we move on the right
     {
       //right adjustment
-      moveWithSpeed(convertRightAngleToTicks(0.2), DIRECTION_RIGHT, 200); //move right
+      move(convertRightAngleToTicks(0.2), DIRECTION_RIGHT, true); //move right
       tried_right = true;
     }
     ir_diff = readIR1Cali() - readIR3Cali();
@@ -207,51 +181,20 @@ void caliLeftAlignmnet(){
     if (ir_diff < -0.3) //if my ir4=5 is closer to the wall, then we move on the left
     {
       //left
-      moveWithSpeed(convertLeftAngleToTicks(0.2), DIRECTION_LEFT, 200);
+      move(convertLeftAngleToTicks(0.2), DIRECTION_LEFT, true);
       tried_left = true;
     }
     else if (ir_diff > 0.3) //if my ir4 is closer to the wall, then we move on the right
     {
       //right
-      moveWithSpeed(convertRightAngleToTicks(0.2), DIRECTION_RIGHT, 200);
+      move(convertRightAngleToTicks(0.2), DIRECTION_RIGHT, true);
       tried_right = true;
     }
-    
-
     ir_diff = readIR5Cali() - readIR4Cali();
   }
 
 
 }
-//void caliDistance1() //Using IR3
-//{
-//  bool tried_front = false;
-//  bool tried_back = false;
-//  float dist = 4.9;
-//  float error = 0.4;
-//
-//  float ir3reading;
-//  ir3reading = readIR3Cali();
-//
-//
-//    while( (abs(ir3reading- dist)> error) && not(tried_front && tried_back)){ //will stop when when IR reading is within error && both (tried_front & tried_back are true).
-//
-//    if (ir3reading < dist) // so if the distance from the front is < than 5cm, we move backward
-//    {
-//      moveWithSpeed(convertDistanceToTicks(0.2),   DIRECTION_BACKWARD, 200);
-//   
-//      ir3reading = readIR3Cali();
-//      tried_front = true;
-//    }
-//    else if (ir3reading > dist) // so if the distannce front is > than 5 cm, we move forward
-//    {
-//      moveWithSpeed(convertDistanceToTicks(0.2),DIRECTION_FORWARD, 200);
-//    
-//      ir3reading = readIR3Cali();
-//      tried_back = true;
-//    }
-//  }
-//}
 
 
 void caliDistanceUsingSensor(int number) //Using IR1 IR2 IR3
@@ -274,66 +217,19 @@ void caliDistanceUsingSensor(int number) //Using IR1 IR2 IR3
 
     if (irreading < distNear) // so if the distance from the front is < than 5cm, we move backward
     {
-      moveWithSpeed(convertDistanceToTicks(0.2),   DIRECTION_BACKWARD, 200);
-   
-      switch (number){
-        case 1: {irreading = readIR1Cali();break;}
-        case 2: {irreading = readIR2Cali();break;}
-        case 3: {irreading = readIR3Cali();break;}
-      }
+      move(convertDistanceToTicks(0.2), DIRECTION_BACKWARD, true);
       tried_front = true;
     }
     else if (irreading > distFar) // so if the distannce front is > than 5 cm, we move forward
     {
-      moveWithSpeed(convertDistanceToTicks(0.2),DIRECTION_FORWARD, 200);
-    
-      switch (number){
+      move(convertDistanceToTicks(0.2), DIRECTION_FORWARD, true);
+      tried_back = true;
+    }
+    switch (number){
         case 1: {irreading = readIR1Cali();break;}
         case 2: {irreading = readIR2Cali();break;}
         case 3: {irreading = readIR3Cali();break;}
       }
-      tried_back = true;
-    }
-    
   }
 
-
-   
-   
-//   while( (abs(irreading - 5)> error) && not(tried_front && tried_back)){
-//      //will stop when when IR reading is within error && both (tried_front & tried_back are true).
-//      resetGlobalConstants();
-//      double pid = 0;
-//      while (irreading < distNear) // so if the distance from the front is < than 5cm, we move backward
-//      {      
-//         
-//         md.setSpeeds((100 + pid) * DIRECTION_BACKWARD[0]  , (100 - pid) * DIRECTION_BACKWARD[1]);
-//         computeDelta();
-//         pid = computePID();
-//         switch (number){
-//           case 1: {irreading = readIR1Cali();break;}
-//           case 2: {irreading = readIR2Cali();break;}
-//           case 3:{irreading = readIR3Cali();break;}
-//         }
-//         
-//      }
-//      md.setBrakes(400, 400);
-//      resetGlobalConstants();
-//      tried_front = true;
-//      pid = 0;
-//      while (irreading > distFar) // so if the distannce front is > than 5 cm, we move forward
-//      {
-//       
-//         md.setSpeeds((100 + pid) * DIRECTION_FORWARD[0]  , (100 - pid) * DIRECTION_FORWARD[1]);
-//         computeDelta();
-//         pid = computePID();
-//         switch (number){
-//           case 1: {irreading = readIR1Cali();break;}
-//           case 2: {irreading = readIR2Cali();break;}
-//           case 3:{irreading = readIR3Cali();break;}
-//         }
-//      }
-//      md.setBrakes(400, 400);
-//      tried_back = true;
-//  }
 }
