@@ -43,17 +43,24 @@ double computeir4P() {   //Proportional only, use ir4 as error
 }
 
 double computeir5P() {   //Proportional only, use ir5 as error
-  double p, error, ir5_KP; 
-  ir5_KP = 20;  
+  double p,d,  error, ir5_KP, ir5_KD, pd; 
+  ir5_KP = 15;  
+  ir5_KD = 10;
   error = 5.0 - readIR5Cali();
+  last_error_to_wall = error - last_error_to_wall; 
 
   p = ir5_KP * error;
+  d = last_error_to_wall * ir5_KD;
 
-  //Return P that is within 50<-->-50range
-  p = max(p, -50);
-  p = min(p, 50);
+  last_error_to_wall = error;
+
+  pd = p + d;
   
-  return p;
+  //Return P that is within 50<-->-50range
+  pd = max(pd, -50);
+  pd = min(pd, 50);
+  
+  return pd;
 }
 
 
