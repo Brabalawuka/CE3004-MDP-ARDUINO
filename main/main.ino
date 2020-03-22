@@ -44,9 +44,9 @@ int16_t lastError = 0;
 int16_t cumError = 0;
 
 
-const double SPEED_L = 312;
+const double SPEED_L = 308;
 const double SPEED_R = 300; 
-const double SPEED_L_SLOW = 212;
+const double SPEED_L_SLOW = 208;
 const double SPEED_R_SLOW = 200; 
 
 //IR sensor pin

@@ -1,10 +1,14 @@
-const double KP = 5;
+const double KP = 3;
 const double KI = 3;
 const double KD = 0.1;
+
+double last_error_to_wall = 0;
 
 double computeP() {   //Proportional only 
   double p, error;   
   error = m1Ticks - m2Ticks;
+  Serial.print("Error is ");
+  Serial.println(error);
 
   p = KP * error;
 
@@ -16,15 +20,24 @@ double computeP() {   //Proportional only
 }
 
 double computeir4P() {   //Proportional only, use ir4 as error
-  double p, error, ir4_KP; 
-  ir4_KP = 20;  
+  double p,d,  error, ir4_KP, ir4_KD, pd; 
+  ir4_KP = 15;  
+  ir4_KD = 10;
+  
   error = 5.0 - readIR4Cali();
+  last_error_to_wall = error - last_error_to_wall; 
 
   p = ir4_KP * error;
+  d = last_error_to_wall * ir4_KD;
+
+  last_error_to_wall = error;
+
+  pd = p + d;
+
 
   //Return P that is within 50<-->-50range
-  p = max(p, -50);
-  p = min(p, 50);
+  pd = max(pd, -50);
+  pd = min(pd, 50);
   
   return p;
 }
@@ -71,13 +84,9 @@ double computePID() {   //Proportional, Integral,Derivative.
 
 
   //Return PID that is within 50<-->-50range
-  if (pid >= 50){
-    return 50;
-    }
-  else if (pid <= -50){
-    return -50;
-    }
-  else{
-    return pid;
-    }
+  pid = max(pid, -50);
+  pid = min(pid, 50);
+  
+  return p;
+
 }

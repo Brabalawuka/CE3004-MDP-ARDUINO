@@ -30,14 +30,21 @@ int move(double ticks, const int direction[2], const bool slow)
         }
         else if ( difference < 100) 
         {
-          brakingOffset = difference / 100;
-          speedL = (base_speedL + p)* brakingOffset * direction[0];
-          speedR = (base_speedR - p)* brakingOffset * direction[1];
+          brakingOffset = difference / 125 + 0.2;
+          speedL = (base_speedL * brakingOffset + p) * direction[0];
+          speedR = (base_speedR * brakingOffset - p) * direction[1];
+          md.setSpeeds(speedL , speedR);
         } else {
           speedL = (base_speedL + p) * direction[0];
           speedR = (base_speedR - p) * direction[1];
+          md.setSpeeds(speedL , speedR);
         }
-        md.setSpeeds(speedL , speedR);
+        
+//        Serial.print("M1Ticks:");
+//        Serial.print(m1Ticks);
+//        Serial.print(" M2Ticks:");
+//        Serial.println(m2Ticks);
+        
     }
     md.setSpeeds(0,0);
     md.setBrakes(400, 400);
@@ -174,9 +181,9 @@ int glideforwardtillwall_exp()
         double speedL, speedR;
         
         if ( difference < 80) {
-          brakingOffset = (difference / 100) + 0.2;
-          speedL = (SPEED_L + p)* brakingOffset * DIRECTION_FORWARD[0];
-          speedR = (SPEED_R - p)* brakingOffset * DIRECTION_FORWARD[1];
+          brakingOffset = (difference / 80);
+          speedL = (SPEED_L * brakingOffset + p) * DIRECTION_FORWARD[0];
+          speedR = (SPEED_R * brakingOffset - p) * DIRECTION_FORWARD[1];
         } else {
           speedL = (SPEED_L + p) * DIRECTION_FORWARD[0];
           speedR = (SPEED_R - p) * DIRECTION_FORWARD[1];
@@ -186,15 +193,15 @@ int glideforwardtillwall_exp()
         ir1reading = readIR1(); //taking reading
         ir2reading = readIR2(); //taking reading
         ir3reading = readIR3(); //taking reading
-        if(ir1reading < threshold){
+        if(ir1reading < threshold || ir2reading < threshold ||ir3reading < threshold){
           break;
         }
-        else if(ir2reading < threshold){
-          break;
-        }
-        else if(ir3reading < threshold){
-          break;
-        }
+//        else if(ir2reading < threshold){
+//          break;
+//        }
+//        else if(ir3reading < threshold){
+//          break;
+//        }
     }
 
     if ((m1Ticks % tick_increment) > (tick_increment/2.0))

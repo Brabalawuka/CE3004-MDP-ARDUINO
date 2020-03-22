@@ -34,8 +34,7 @@ int distance = 0;
 
 void loopReading(){
 
-  
-  
+ 
   while (Serial.available() > 0) {
     if (cmd != '#'){
       int inChar = Serial.read();
