@@ -66,11 +66,11 @@ int movewithfeedback(double ticks, const int direction[2])
         
         p = computeP();
 
-        double difference = ticks - m1Ticks;
+        double difference = tick_threshold - m1Ticks;
         double speedL, speedR;
         
-        if ( difference < 100) {
-          brakingOffset = difference / 100;
+        if ( difference < 80) {
+          brakingOffset = (difference / 100) + 0.2;
           speedL = (SPEED_L + p)* brakingOffset * direction[0];
           speedR = (SPEED_R - p)* brakingOffset * direction[1];
         } else {
@@ -155,6 +155,7 @@ int glideforwardtillwall_exp()
     resetGlobalConstants();
     double p = 0;
     double threshold = 8;
+    double brakingOffset = 0;
     int tick_increment = (int)round(convertDistanceToTicks(10));
     int tick_threshold = tick_increment;
     float ir1reading, ir2reading, ir3reading;
@@ -171,8 +172,20 @@ int glideforwardtillwall_exp()
         }
         
         p = computeir4P();
-       
-        md.setSpeeds((SPEED_L + p) * DIRECTION_FORWARD[0], (SPEED_R - p) * DIRECTION_FORWARD[1]);
+
+        double difference = tick_threshold - m1Ticks;
+        double speedL, speedR;
+        
+        if ( difference < 80) {
+          brakingOffset = (difference / 100) + 0.2;
+          speedL = (SPEED_L + p)* brakingOffset * DIRECTION_FORWARD[0];
+          speedR = (SPEED_R - p)* brakingOffset * DIRECTION_FORWARD[1];
+        } else {
+          speedL = (SPEED_L + p) * DIRECTION_FORWARD[0];
+          speedR = (SPEED_R - p) * DIRECTION_FORWARD[1];
+        }
+        md.setSpeeds(speedL , speedR );
+        
         ir1reading = readIR1(); //taking reading
         ir2reading = readIR2(); //taking reading
         ir3reading = readIR3(); //taking reading
@@ -236,12 +249,12 @@ int glideforwarddistance(double ticks)
     double p = 0;
     double brakingOffset = 0;
 
-    while (m1Ticks <= ticks)
+    while (m1Ticks <= ticks && m2Ticks <= ticks)
     {   
         p = computeir4P();
 
         double difference = ticks - m1Ticks;
-        double speedLeft, speedRight, speedL, speedR;
+        double speedL, speedR;
         if ( difference < 100) {
           brakingOffset = difference / 100;
           speedL = (SPEED_L + p)* brakingOffset * DIRECTION_FORWARD[0];
@@ -264,7 +277,7 @@ int glidebackwarddistance(double ticks)
     double p = 0;
     double brakingOffset = 0;
 
-    while (m1Ticks <= ticks)
+    while (m1Ticks <= ticks && m2Ticks <= ticks)
     {   
         p = computeir5P();
 
