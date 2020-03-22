@@ -95,32 +95,29 @@ int movewithfeedback(double ticks, const int direction[2])
 }
 
 
-int moveTillEnd() 
+int movetillwall() 
 {
-    // Only used for fastest path
+    // Only used for fastest path 
     resetGlobalConstants();
     double p = 0;
     double threshold = 8;
-    float ir1reading, ir2reading, ir3reading;
-    
+    float ir1reading, ir3reading;
+
     while (true)
     {   
         p = computeP();
        
         md.setSpeeds((SPEED_L + p) * DIRECTION_FORWARD[0], (SPEED_R - p) * DIRECTION_FORWARD[1]);
         ir1reading = readIR1(); //taking reading
-        ir2reading = readIR2(); //taking reading
         ir3reading = readIR3(); //taking reading
         if(ir1reading < threshold){
-          break;
-        }
-        else if(ir2reading < threshold){
           break;
         }
         else if(ir3reading < threshold){
           break;
         }
     }
+    
     md.setBrakes(400, 400);
     delay(20);
     return 1;

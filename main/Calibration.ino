@@ -33,23 +33,6 @@ void caliEdge() //when there is a wall on the the left and you want the robot to
 }
 
 
-void caliForwardtoWall() // move until got wall in front 
-{
-  float dist = 9.9;
-  float error = 0.4;
-
-  float ir1reading, ir3reading;
-  ir1reading = readIR1();
-  ir3reading = readIR3();
-
-  if(ir1reading > dist && ir3reading > dist) // checking if there is a need for me to move first
-  {
-    moveTillEnd(); //move
-  }
-  caliFront();    
-}
-
-
 void caliLeftBack() // Do this when there is wall on the left and back
 {
   move(convertLeftAngleToTicks(180), DIRECTION_LEFT, false); // rotate left

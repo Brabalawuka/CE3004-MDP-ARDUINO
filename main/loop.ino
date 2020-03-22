@@ -116,7 +116,8 @@ void loopReading(){
             break;
           }
           case 'x':{
-            caliForwardtoWall();
+            movetillwall();
+            caliFront();
             Serial.println("Xdone");
             break;
           }
