@@ -76,10 +76,10 @@ int movewithfeedback(double ticks, const int direction[2])
         double difference = tick_threshold - m1Ticks;
         double speedL, speedR;
         
-        if ( difference < 80) {
-          brakingOffset = (difference / 100) + 0.2;
-          speedL = (SPEED_L + p)* brakingOffset * direction[0];
-          speedR = (SPEED_R - p)* brakingOffset * direction[1];
+        if ( difference < 100) {
+          brakingOffset = difference / 125 + 0.2;
+          speedL = (SPEED_L * brakingOffset + p) * direction[0];
+          speedR = (SPEED_R * brakingOffset - p) * direction[1];
         } else {
           speedL = (SPEED_L + p) * direction[0];
           speedR = (SPEED_R - p) * direction[1];
@@ -180,8 +180,8 @@ int glideforwardtillwall_exp()
         double difference = tick_threshold - m1Ticks;
         double speedL, speedR;
         
-        if ( difference < 80) {
-          brakingOffset = (difference / 80);
+        if ( difference < 100) {
+          brakingOffset = difference / 125 + 0.2;
           speedL = (SPEED_L * brakingOffset + p) * DIRECTION_FORWARD[0];
           speedR = (SPEED_R * brakingOffset - p) * DIRECTION_FORWARD[1];
         } else {
@@ -260,9 +260,9 @@ int glideforwarddistance(double ticks)
         double difference = ticks - m1Ticks;
         double speedL, speedR;
         if ( difference < 100) {
-          brakingOffset = difference / 100;
-          speedL = (SPEED_L + p)* brakingOffset * DIRECTION_FORWARD[0];
-          speedR = (SPEED_R - p)* brakingOffset * DIRECTION_FORWARD[1];
+          brakingOffset = difference / 125 + 0.2;
+          speedL = (SPEED_L * brakingOffset + p) * DIRECTION_FORWARD[0];
+          speedR = (SPEED_R * brakingOffset - p) * DIRECTION_FORWARD[1];
         } else {
           speedL = (SPEED_L + p) * DIRECTION_FORWARD[0];
           speedR = (SPEED_R - p) * DIRECTION_FORWARD[1];
@@ -288,9 +288,9 @@ int glidebackwarddistance(double ticks)
         double difference = ticks - m1Ticks;
         double speedLeft, speedRight, speedL, speedR;
         if ( difference < 100) {
-          brakingOffset = difference / 100;
-          speedL = (SPEED_L + p)* brakingOffset * DIRECTION_BACKWARD[0];
-          speedR = (SPEED_R - p)* brakingOffset * DIRECTION_BACKWARD[1];
+          brakingOffset = difference / 125 + 0.2;
+          speedL = (SPEED_L * brakingOffset + p) * DIRECTION_BACKWARD[0];
+          speedR = (SPEED_R * brakingOffset - p) * DIRECTION_BACKWARD[1];
         } else {
           speedL = (SPEED_L + p) * DIRECTION_BACKWARD[0];
           speedR = (SPEED_R - p) * DIRECTION_BACKWARD[1];
