@@ -26,7 +26,7 @@ double convertRightAngleToTicks(int angle) //convertLeftAngleToTicks(int angle) 
     return angle*4.40;
   }
    
-  double tick = angle * (4.40 + angle/240 * 0.1); // 6.21v 4.38 
+  double tick = angle * (4.45 + angle/240 * 0.1); // 6.21v 4.38 
   return tick;
 }
 
@@ -35,6 +35,6 @@ double convertLeftAngleToTicks(int angle) //convertRightAngleToTicks(int angle) 
   if(angle == 45){
     return angle*4.40;
   }
-  double tick = angle * (4.420 + angle/270 * 0.1); // 6.21v 4.37
+  double tick = angle * (4.470 + angle/240 * 0.1); // 6.21v 4.37
   return tick;
 }

@@ -4,34 +4,39 @@ int move(double ticks, const int direction[2])
     double pid = 0;
     double brakingOffset = 0;
     double startingOffset = 0;
-
+    int speedCounter = 0;
 
     //md.setSpeeds((SPEED + pid) * direction[0]  , (SPEED - pid) * direction[1]);
     while (m1Ticks <= ticks)
     {   
-
+        
         computeDelta();
         pid = computePID();
 
         double difference = ticks - m1Ticks;
-        double speedLeft, speedRight, speedL, speedR;
-        speedLeft = (SPEED + pid)* brakingOffset * direction[0];
-        speedRight = (SPEED - pid)* brakingOffset * direction[1];
-        speedL = (SPEED + pid) * direction[0];
-        speedR = (SPEED - pid) * direction[1];
+        double speedLeft, speedRight, speedL, speedR, speedLStart, speedRStart;
+//        speedLeft = (SPEED + pid)* brakingOffset * direction[0] + 9;
+//        speedRight = (SPEED - pid)* brakingOffset * direction[1];
+//        speedL = (SPEED + pid) * direction[0] + 9;
+//        speedR = (SPEED - pid) * direction[1];
 
-        if ( difference < 100) {
+        if (speedCounter < 300){
+          md.setSpeeds(speedCounter * direction[0], speedCounter * direction[1]);
+          delay(5);
+        } else if ( difference < 100) {
           brakingOffset = difference / 100;
-          md.setSpeeds(speedLeft, speedRight);
+          md.setSpeeds((SPEED + pid + 12)* brakingOffset * direction[0], (SPEED - pid)* brakingOffset * direction[1]);
         } else {
-          md.setSpeeds(speedL , speedR );
+          md.setSpeeds((SPEED + pid + 12) * direction[0] , (SPEED - pid) * direction[1] );
         }
-           
-//             Serial.println("printing number of ticks");       
-//             Serial.println(m1Ticks);
-//             Serial.println(m2Ticks);
+//        Serial.print(m1Ticks);
+//        Serial.println(m2Ticks);
+
+        speedCounter += 10;
+       
     
     }
+    md.setSpeeds(0,0);
     md.setBrakes(400, 400);
  //    the number of ticks output here should be the same for each motor
 //    Serial.print("#final m1ticks: ");
