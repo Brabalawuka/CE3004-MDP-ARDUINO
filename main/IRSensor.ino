@@ -20,7 +20,7 @@ float readIR1Cali() {
     arr[i] = analogRead(irR1);
   }
   float middle = median(arr, 20);
-  return 7639.679695 / middle - 8.13793942;
+  return 7639.679695 / middle - 8.03793942; //8.13793942
 }
 float readIR2Cali() {
   float arr[20] = {};
@@ -29,7 +29,7 @@ float readIR2Cali() {
     arr[i] = analogRead(irR2);
   }
   float middle = median(arr, 20);
-  return 7245.370852 / middle - 7.459382 ;
+  return 7245.370852 / middle - 7.359382 ; //7.459382
 }
 float readIR3Cali() {
   float arr[20] = {};
@@ -38,7 +38,7 @@ float readIR3Cali() {
     arr[i] = analogRead(irR3);
   }
   float middle = median(arr, 20);
-  return  6396.729152 / middle - 6.4674028 ;
+  return  6396.729152 / middle - 6.1674028 ; // 6.4674028
 }
 float readIR4Cali() {
   float arr[20] = {};
@@ -47,7 +47,7 @@ float readIR4Cali() {
     arr[i] = analogRead(irR4);
   }
   float middle = median(arr, 20);
-  return  5731.640651 / middle - 6.93913476;
+  return  5731.640651 / middle - 6.93913476; 
 }
 float readIR5Cali() {
   float arr[20] = {};
@@ -56,7 +56,7 @@ float readIR5Cali() {
     arr[i] = analogRead(irR5);
   }
   float middle = median(arr, 20);
-  return 5743.261741 / middle - 6.88182307;
+  return 5743.261741 / middle - 6.88182307; 
 }
 
 float readIR6Cali() {
