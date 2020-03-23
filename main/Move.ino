@@ -23,19 +23,19 @@ int move(double ticks, const int direction[2], const bool slow)
         double difference = ticks - m1Ticks;
         double speedL, speedR;
         
-        if (startingOffset < min(base_speedL, base_speedR))
+        if (startingOffset < min(base_speedL, base_speedR) && !slow)
         {
           md.setSpeeds(startingOffset * direction[0], startingOffset * direction[1]);
           startingOffset += 10;
         }
-        else if ( difference < 100) 
+        else if ( difference < 100 && !slow) 
         {
           brakingOffset = difference / 125 + 0.2;
-          speedL = (base_speedL * brakingOffset + p) * direction[0];
+          speedL = (base_speedL * brakingOffset + p + 7) * direction[0];
           speedR = (base_speedR * brakingOffset - p) * direction[1];
           md.setSpeeds(speedL , speedR);
         } else {
-          speedL = (base_speedL + p) * direction[0];
+          speedL = (base_speedL + p + 7) * direction[0];
           speedR = (base_speedR - p) * direction[1];
           md.setSpeeds(speedL , speedR);
         }
@@ -52,12 +52,41 @@ int move(double ticks, const int direction[2], const bool slow)
     return 1;
 }
 
+//
+//int moveCali(double ticks, const int direction[2], const bool slow) 
+//{
+//    resetGlobalConstants();
+//    double pid = 0;
+//
+//    if (slow == true)
+//    {
+//      base_speedL = SPEED_L_SLOW;
+//      base_speedR = SPEED_R_SLOW;
+//    }
+//
+//
+//    md.setSpeeds((speed + pid) * direction[0]  , (speed - pid) * direction[1]);
+//    while (m1Ticks <= ticks && Forward)
+//    {   
+//
+//        computeDelta();
+//        pid = computePID();
+//
+//        //Serial.println();       
+//    }
+//    md.setBrakes(400, 400);
+//
+//    delay(10);
+//
+//    return 1;
+//}
+
 int movewithfeedback(double ticks, const int direction[2]) 
 {
     resetGlobalConstants();
     double p = 0;
     double brakingOffset = 0;
-    int tick_increment = (int)round(convertDistanceToTicks(10));
+    int tick_increment = 303;
     int tick_threshold = tick_increment;
 
     while (m1Ticks <= ticks)
@@ -158,9 +187,9 @@ int glideforwardtillwall_exp()
     // Only used for exploration 
     resetGlobalConstants();
     double p = 0;
-    double threshold = 8;
+    double threshold = 7;
     double brakingOffset = 0;
-    int tick_increment = (int)round(convertDistanceToTicks(10));
+    int tick_increment = 305;
     int tick_threshold = tick_increment;
     float ir1reading, ir2reading, ir3reading;
 
@@ -180,8 +209,8 @@ int glideforwardtillwall_exp()
         double difference = tick_threshold - m1Ticks;
         double speedL, speedR;
         
-        if ( difference < 100) {
-          brakingOffset = difference / 125 + 0.2;
+        if ( difference < 120) {
+          brakingOffset = (difference / 120);
           speedL = (SPEED_L * brakingOffset + p) * DIRECTION_FORWARD[0];
           speedR = (SPEED_R * brakingOffset - p) * DIRECTION_FORWARD[1];
         } else {
@@ -193,15 +222,10 @@ int glideforwardtillwall_exp()
         ir1reading = readIR1(); //taking reading
         ir2reading = readIR2(); //taking reading
         ir3reading = readIR3(); //taking reading
-        if(ir1reading < threshold || ir2reading < threshold ||ir3reading < threshold){
+        if(ir1reading < threshold || ir2reading < threshold ||(ir3reading < threshold && ir3reading > 0)){
           break;
         }
-//        else if(ir2reading < threshold){
-//          break;
-//        }
-//        else if(ir3reading < threshold){
-//          break;
-//        }
+
     }
 
     if ((m1Ticks % tick_increment) > (tick_increment/2.0))

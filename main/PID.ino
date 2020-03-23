@@ -7,8 +7,8 @@ double last_error_to_wall = 0;
 double computeP() {   //Proportional only 
   double p, error;   
   error = m1Ticks - m2Ticks;
-  Serial.print("Error is ");
-  Serial.println(error);
+//  Serial.print("Error is ");
+//  Serial.println(error);
 
   p = KP * error;
 
@@ -22,7 +22,7 @@ double computeP() {   //Proportional only
 double computeir4P() {   //Proportional only, use ir4 as error
   double p,d,  error, ir4_KP, ir4_KD, pd; 
   ir4_KP = 15;  
-  ir4_KD = 10;
+  ir4_KD = 5;
   
   error = 5.0 - readIR4Cali();
   last_error_to_wall = error - last_error_to_wall; 

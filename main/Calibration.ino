@@ -188,6 +188,7 @@ void caliDistanceUsingSensor(int number) //Using IR1 IR2 IR3
   float distFar = 4.8;
   float error = 0.3;
 
+
   float irreading;
   switch (number){
      case 1: {irreading = readIR1Cali();break;}
