@@ -52,34 +52,6 @@ int move(double ticks, const int direction[2], const bool slow)
     return 1;
 }
 
-//
-//int moveCali(double ticks, const int direction[2], const bool slow) 
-//{
-//    resetGlobalConstants();
-//    double pid = 0;
-//
-//    if (slow == true)
-//    {
-//      base_speedL = SPEED_L_SLOW;
-//      base_speedR = SPEED_R_SLOW;
-//    }
-//
-//
-//    md.setSpeeds((speed + pid) * direction[0]  , (speed - pid) * direction[1]);
-//    while (m1Ticks <= ticks && Forward)
-//    {   
-//
-//        computeDelta();
-//        pid = computePID();
-//
-//        //Serial.println();       
-//    }
-//    md.setBrakes(400, 400);
-//
-//    delay(10);
-//
-//    return 1;
-//}
 
 int movewithfeedback(double ticks, const int direction[2]) 
 {
@@ -107,10 +79,10 @@ int movewithfeedback(double ticks, const int direction[2])
         
         if ( difference < 100) {
           brakingOffset = difference / 125 + 0.2;
-          speedL = (SPEED_L * brakingOffset + p) * direction[0];
+          speedL = (SPEED_L * brakingOffset + p + 7) * direction[0];
           speedR = (SPEED_R * brakingOffset - p) * direction[1];
         } else {
-          speedL = (SPEED_L + p) * direction[0];
+          speedL = (SPEED_L + p + 7) * direction[0];
           speedR = (SPEED_R - p) * direction[1];
         }
         md.setSpeeds(speedL , speedR );
@@ -143,7 +115,7 @@ int movetillwall()
     {   
         p = computeP();
        
-        md.setSpeeds((SPEED_L + p) * DIRECTION_FORWARD[0], (SPEED_R - p) * DIRECTION_FORWARD[1]);
+        md.setSpeeds((SPEED_L + p + 7) * DIRECTION_FORWARD[0], (SPEED_R - p) * DIRECTION_FORWARD[1]);
         ir1reading = readIR1(); //taking reading
         ir3reading = readIR3(); //taking reading
         if(ir1reading < threshold){
@@ -171,7 +143,7 @@ int moveTillLeftEnd()
     {   
         p = computeP();
        
-        md.setSpeeds((SPEED_L_SLOW + p) * DIRECTION_FORWARD[0], (SPEED_R_SLOW - p) * DIRECTION_FORWARD[1]);
+        md.setSpeeds((SPEED_L_SLOW + p + 7) * DIRECTION_FORWARD[0], (SPEED_R_SLOW - p) * DIRECTION_FORWARD[1]);
         ir4reading = readIR4Cali(); //taking reading
         if(ir4reading > threshold){
           break;
@@ -211,10 +183,10 @@ int glideforwardtillwall_exp()
         
         if ( difference < 120) {
           brakingOffset = (difference / 120);
-          speedL = (SPEED_L * brakingOffset + p) * DIRECTION_FORWARD[0];
+          speedL = (SPEED_L * brakingOffset + p + 7) * DIRECTION_FORWARD[0];
           speedR = (SPEED_R * brakingOffset - p) * DIRECTION_FORWARD[1];
         } else {
-          speedL = (SPEED_L + p) * DIRECTION_FORWARD[0];
+          speedL = (SPEED_L + p + 7) * DIRECTION_FORWARD[0];
           speedR = (SPEED_R - p) * DIRECTION_FORWARD[1];
         }
         md.setSpeeds(speedL , speedR );
@@ -254,7 +226,7 @@ int glideforwardtillwall_fp()
     {   
         p = computeir4P();
        
-        md.setSpeeds((SPEED_L + p) * DIRECTION_FORWARD[0], (SPEED_R - p) * DIRECTION_FORWARD[1]);
+        md.setSpeeds((SPEED_L + p + 7) * DIRECTION_FORWARD[0], (SPEED_R - p) * DIRECTION_FORWARD[1]);
         ir1reading = readIR1(); //taking reading
         ir3reading = readIR3(); //taking reading
         if(ir1reading < threshold){
@@ -285,10 +257,10 @@ int glideforwarddistance(double ticks)
         double speedL, speedR;
         if ( difference < 100) {
           brakingOffset = difference / 125 + 0.2;
-          speedL = (SPEED_L * brakingOffset + p) * DIRECTION_FORWARD[0];
+          speedL = (SPEED_L * brakingOffset + p + 7) * DIRECTION_FORWARD[0];
           speedR = (SPEED_R * brakingOffset - p) * DIRECTION_FORWARD[1];
         } else {
-          speedL = (SPEED_L + p) * DIRECTION_FORWARD[0];
+          speedL = (SPEED_L + p + 7) * DIRECTION_FORWARD[0];
           speedR = (SPEED_R - p) * DIRECTION_FORWARD[1];
         }
         md.setSpeeds(speedL , speedR );
@@ -313,10 +285,10 @@ int glidebackwarddistance(double ticks)
         double speedLeft, speedRight, speedL, speedR;
         if ( difference < 100) {
           brakingOffset = difference / 125 + 0.2;
-          speedL = (SPEED_L * brakingOffset + p) * DIRECTION_BACKWARD[0];
+          speedL = (SPEED_L * brakingOffset + p + 7) * DIRECTION_BACKWARD[0];
           speedR = (SPEED_R * brakingOffset - p) * DIRECTION_BACKWARD[1];
         } else {
-          speedL = (SPEED_L + p) * DIRECTION_BACKWARD[0];
+          speedL = (SPEED_L + p + 7) * DIRECTION_BACKWARD[0];
           speedR = (SPEED_R - p) * DIRECTION_BACKWARD[1];
         }
         md.setSpeeds(speedL , speedR );
