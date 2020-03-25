@@ -159,7 +159,7 @@ int glideforwardtillwall_exp()
     // Only used for exploration 
     resetGlobalConstants();
     double p = 0;
-    double threshold = 7;
+    double threshold = 6;
     double brakingOffset = 0;
     int tick_increment = 305;
     int tick_threshold = tick_increment;

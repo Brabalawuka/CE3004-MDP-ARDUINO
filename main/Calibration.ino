@@ -89,7 +89,7 @@ void caliDistance()
 {
   bool tried_front = false;
   bool tried_back = false;
-  float dist = 5.0;
+  float dist = 4.8;
   float error = 0.3;
 
   float ir1reading, ir3reading;
