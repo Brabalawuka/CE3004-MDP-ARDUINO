@@ -49,7 +49,7 @@ void loopReading(){
         Serial.println(inString.toInt());
         distance = inString.toInt();
         switch(cmd){
-          case 'f':{
+          case 'f':{ //Simple Move Forward for exploration
             if (distance > 10)
             {
               movewithfeedback(convertDistanceToTicks(distance),  DIRECTION_FORWARD);
@@ -61,18 +61,28 @@ void loopReading(){
             Serial.println("Xdone");
             break;
           }
-          case 't':{
+          case 't':{ //Move forward for fastest path
             move(convertDistanceToTicks(distance),  DIRECTION_FORWARD, false);
             Serial.println("Xdone");
             break;
           }
-          case 'F':{
-            move(convertDiagDistanceToTicks(distance),  DIRECTION_FORWARD, false);
+          case 'T':{ //Move forward for fastest path at faster speed
+            moveWithSpeed(convertDistanceToTicks(distance),  DIRECTION_FORWARD, 360);
             Serial.println("Xdone");
             break;
           }
-          case 'b':{
-            move(convertDistanceToTicks(distance),   DIRECTION_BACKWARD, false);
+          case 'F':{ //Move forward at diagnal for fastest path at faster speed
+            moveWithSpeed(convertDiagDistanceToTicks(distance),  DIRECTION_FORWARD, false);
+            Serial.println("Xdone");
+            break;
+          } 
+          case 'b':{ //Move backwardfor fastest path at faster speed
+            moveWithSpeed(convertDistanceToTicks(distance),   DIRECTION_BACKWARD, 360);
+            Serial.println("Xdone");
+            break;
+          }
+          case 'B':{ //Move backward at diagnal for fastest path at faster speed
+            moveWithSpeed(convertDiagDistanceToTicks(distance),   DIRECTION_BACKWARD, 360);
             Serial.println("Xdone");
             break;
           }
@@ -120,7 +130,13 @@ void loopReading(){
             break;
           }
           case 'x':{
-            movetillwall();
+            movetillwall(false);
+            caliFront();
+            Serial.println("Xdone");
+            break;
+          }
+           case 'X':{
+            movetillwall(true);
             caliFront();
             Serial.println("Xdone");
             break;
@@ -135,8 +151,18 @@ void loopReading(){
             Serial.println("Xdone");
             break;
          }
+         case 'G':{
+            glideforwarddistance_faster(convertDistanceToTicks(distance), 360);
+            Serial.println("Xdone");
+            break;
+         }
          case 'h':{
             glidebackwarddistance(convertDistanceToTicks(distance));
+            Serial.println("Xdone");
+            break;
+         }
+         case 'H':{
+            glidebackwarddistance_faster(convertDistanceToTicks(distance), 360);
             Serial.println("Xdone");
             break;
          }
@@ -145,8 +171,19 @@ void loopReading(){
             Serial.println("Xdone");
             break;
          }
+         case 'J':{
+            glideforwardtillwall_exp_faster(360);
+            Serial.println("Xdone");
+            break;
+         }
          case 'k':{
             glideforwardtillwall_fp();
+            caliFront();
+            Serial.println("Xdone");
+            break;
+         }
+         case 'K':{
+            glideforwardtillwall_fp_faster(360);
             caliFront();
             Serial.println("Xdone");
             break;
