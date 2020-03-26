@@ -1,72 +1,72 @@
 /*
- * 
-34 5 6
-2[][][]
- [][][]
-1[][][]
 
-Short Sensor - 1,2,3,5,6
-Long Sensor - 4
+   1 2 3 6
+  4[][][]
+   [][][]
+  5[][][]
 
-*/ 
-float leftwall_ir45(){
-    return abs(readIR4Cali()-readIR5Cali());
-  }
+  Short Sensor - 1,2,3,4,5
+  Long Sensor - 6
+
+*/
+float leftwall_ir45() {
+  return abs(readIR4Cali() - readIR5Cali());
+}
 
 float readIR1Cali() {
   float arr[20] = {};
   int i;
-  for(i=0; i<20; i++){
+  for (i = 0; i < 20; i++) {
     arr[i] = analogRead(irR1);
   }
   float middle = median(arr, 20);
-  return (1/0.0000021192)/(middle +(0.008287/0.0000021192))-100 ;
+  return 7639.679695 / middle - 7.83793942; //8.13793942
 }
 float readIR2Cali() {
   float arr[20] = {};
   int i;
-  for(i=0; i<20; i++){
+  for (i = 0; i < 20; i++) {
     arr[i] = analogRead(irR2);
   }
   float middle = median(arr, 20);
-  return (1/0.00000176336)/(middle +(0.008487/0.00000176336))-100 ;
+  return 7245.370852 / middle - 7.159382 ; //7.459382
 }
 float readIR3Cali() {
   float arr[20] = {};
   int i;
-  for(i=0; i<20; i++){
+  for (i = 0; i < 20; i++) {
     arr[i] = analogRead(irR3);
   }
   float middle = median(arr, 20);
-  return (1/0.000087535)/(middle +(0.01759/0.000087535))-10 ;
+  return  6396.729152 / middle - 5.9674028 ; // 6.4674028
 }
 float readIR4Cali() {
   float arr[20] = {};
   int i;
-  for(i=0; i<20; i++){
+  for (i = 0; i < 20; i++) {
     arr[i] = analogRead(irR4);
   }
   float middle = median(arr, 20);
-  return (1/0.00027499)/(middle +(-0.02272112/0.00027499))-5;
+  return  5731.640651 / middle - 6.63913476; //6.9
 }
 float readIR5Cali() {
   float arr[20] = {};
   int i;
-  for(i=0; i<20; i++){
+  for (i = 0; i < 20; i++) {
     arr[i] = analogRead(irR5);
   }
   float middle = median(arr, 20);
-  return (1/0.00002389)/(middle +(0.01843/0.00002389))-30;
+  return 5743.261741 / middle - 6.88182307; 
 }
-  
+
 float readIR6Cali() {
   float arr[20] = {};
   int i;
-  for(i=0; i<20; i++){
+  for (i = 0; i < 20; i++) {
     arr[i] = analogRead(irR6);
   }
   float middle = median(arr, 20);
-  return (1/0.0002415)/(middle +(0.01831/0.00002415))-30;
+  return 6506.84523 / middle - 6.2879815;
 }
 
 
@@ -76,107 +76,99 @@ float readIR6Cali() {
 float readIR1() {
   float arr[30] = {};
   int i;
-  for(i=0; i<30; i++){
+  for (i = 0; i < 30; i++) {
     arr[i] = analogRead(irR1);
   }
   float middle = median(arr, 30);
-  return (1/0.00017375)/(middle +(-0.0026447/0.00017375))-5 ;
+  return 6506.84523 / middle - 6.2879815 ;
 }
 
 
 float readIR2() {
   float arr[30] = {};
   int i;
-  for(i=0; i<30; i++){
+  for (i = 0; i < 30; i++) {
     arr[i] = analogRead(irR2);
   }
   float middle = median(arr, 30);
-  return (1/0.000172)/(middle +(0.004298/0.000172))- 4.5 ;
+  return (1 / 0.000172) / (middle + (0.004298 / 0.000172)) - 4.5 ;
 }
 
- 
+
 float readIR3() {
   float arr[30] = {};
   int i;
-  for(i=0; i<30; i++){
+  for (i = 0; i < 30; i++) {
     arr[i] = analogRead(irR3);
   }
   float middle = median(arr, 30);
-  return (1/0.000233)/(middle +(-0.01309/0.000233))- 3.5 ;
+  return (1 / 0.000233) / (middle + (-0.01309 / 0.000233)) - 3.5 ;
 }
 
 
 float readIR4() {
   float arr[20] = {};
   int i;
-  for(i=0; i<20; i++){
+  for (i = 0; i < 20; i++) {
     arr[i] = analogRead(irR4);
   }
   float middle = median(arr, 20);
-  if (middle >= 490){
-    return (600 - middle)/10;
-    }
-  return (1/0.000213)/(middle +(-0.00443/0.000213))-6 ;
+  if (middle >= 490) {
+    return (600 - middle) / 10;
+  }
+  return 6467.629 / middle - 9.27331 ;
 }
 
 float readIR5() {
   float arr[30] = {};
   int i;
-  for(i=0; i<30; i++){
+  for (i = 0; i < 30; i++) {
     arr[i] = analogRead(irR5);
   }
   float middle = median(arr, 30);
-  return (1/0.000265)/(middle +(-0.01166/0.000265))-5;
+  return 6689.216 / middle - 9.82467;
 }
 
 float readIR6() {
   float arr[30] = {};
   int i;
-  for(i=0; i<30; i++){
+  for (i = 0; i < 30; i++) {
     arr[i] = analogRead(irR6);
   }
   float middle = median(arr, 30);
-  return (1/0.00004292)/(middle +(0.003483/0.00004292))-30 ;
+  if (middle < 240)
+    return 14533.0853/ middle - 17.142637;
+  else if (middle < 380)
+    return 13471.53846 / middle - 12.1612809;
+  else
+    return 24691.488 / middle - 37.379339; 
 }
 
 
-void checkRawValuesCali (){
+void checkRawValuesCali () {
 
-    Serial.println("X"+String(readIR1Cali())+";"
-                      +String(readIR2Cali())+";"
-                      +String(readIR3Cali())+";"
-                      +String(readIR4Cali())+";"
-                      +String(readIR5Cali())
-                 );
-  }
+  Serial.println("X" + String(readIR1Cali()) + ";"
+                 + String(readIR2Cali()) + ";"
+                 + String(readIR3Cali()) + ";"
+                 + String(readIR4Cali()) + ";"
+                 + String(readIR5Cali())
+                );
+}
 
 
-void checkRawValues (){
+void checkRawValues () {
 
-    Serial.println("X"+String(readIR1())+";"
-                      +String(readIR2())+";"
-                      +String(readIR3())+";"
-                      +String(readIR4())+";"
-                      +String(readIR5())+";"
-                      +String(readIR6())
-                 );
+  Serial.println("X" + String(readIR1()) + ";"
+                 + String(readIR2()) + ";"
+                 + String(readIR3()) + ";"
+                 + String(readIR4()) + ";"
+                 + String(readIR5()) + ";"
+                 + String(readIR6())
+                );
 
-  }
+}
 
-//CheckList
 
-//collects samples for ir Array
-//void irSamples(int maxnum) {
-//  for (int i = 0; i < maxnum; i++) {
-//    irArr1[i] = analogRead(irR1);
-//    irArr2[i] = readIR2();
-//    irArr3[i] = readIR3();
-//    irArr4[i] = readIR4();
-//    irArr5[i] = readIR5();
-//    irArr6[i] = readIR6();
-//    delay(5);
-//  }
-//}
 ///////////////////////////////////////////////////////////////
 /*Sorting*/
 
@@ -219,5 +211,7 @@ float qselect(float A[], int start, int end, int k) {
   if (k >= left && k <= end) {
     return qselect(A, left, end, k);
   }
+  
+  
   return A[right + 1];
 }

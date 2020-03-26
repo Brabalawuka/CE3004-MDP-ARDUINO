@@ -21,6 +21,7 @@
 #include <DualVNH5019MotorShield.h>
 #include <EnableInterrupt.h>
 #include "string.h"
+#include "math.h"
 #include "SharpIR.h"
 
 DualVNH5019MotorShield md;
@@ -43,14 +44,17 @@ int16_t lastError = 0;
 int16_t cumError = 0;
 
 
-const double SPEED = 350; //cannot be greater than 350 to leave spce for pid control 
+const double SPEED_L = 300;
+const double SPEED_R = 300; 
+const double SPEED_L_SLOW = 280;
+const double SPEED_R_SLOW = 280; 
 
 //IR sensor pin
 #define irR1 A0 
 #define irR2 A1 
 #define irR3 A2 
-#define irR4 A3 // Long Range Sensor
-#define irR5 A4 
+#define irR4 A4 // Long Range Sensor
+#define irR5 A3 
 #define irR6 A5 
 
 
