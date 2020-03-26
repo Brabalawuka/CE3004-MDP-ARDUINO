@@ -72,7 +72,7 @@ void loopReading(){
             break;
           }
           case 'F':{ //Move forward at diagnal for fastest path at faster speed
-            moveWithSpeed(convertDiagDistanceToTicks(distance),  DIRECTION_FORWARD, false);
+            moveWithSpeed(convertDiagDistanceToTicks(distance),  DIRECTION_FORWARD, 360);
             Serial.println("Xdone");
             break;
           } 
