@@ -56,12 +56,12 @@ void caliLeft(){
   ir4Reading = readIR4Cali();
   ir5Reading = readIR5Cali();
 
-  if(ir5Reading <= 4.5 || ir5Reading >= 5.5 || ir4Reading >= 5.5 || ir4Reading <= 4.5)
+  if(ir5Reading <= 4.3 || ir5Reading >= 5.7 || ir4Reading >= 5.7 || ir4Reading <= 4.3)
   {
     move(convertLeftAngleToTicks(90), DIRECTION_LEFT, true);
     caliFront();
     move(convertRightAngleToTicks(90), DIRECTION_RIGHT, true);//rotate right
-    delay(100);
+//    delay(100);
     caliLeftAlignmnet();
   }
   

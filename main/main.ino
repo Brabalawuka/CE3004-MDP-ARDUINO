@@ -46,15 +46,15 @@ int16_t cumError = 0;
 
 const double SPEED_L = 300;
 const double SPEED_R = 300; 
-const double SPEED_L_SLOW = 250;
-const double SPEED_R_SLOW = 250; 
+const double SPEED_L_SLOW = 280;
+const double SPEED_R_SLOW = 280; 
 
 //IR sensor pin
 #define irR1 A0 
 #define irR2 A1 
 #define irR3 A2 
-#define irR4 A3 // Long Range Sensor
-#define irR5 A4 
+#define irR4 A4 // Long Range Sensor
+#define irR5 A3 
 #define irR6 A5 
 
 

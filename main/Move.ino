@@ -159,9 +159,9 @@ int glideforwardtillwall_exp()
     // Only used for exploration 
     resetGlobalConstants();
     double p = 0;
-    double threshold = 6;
+    double threshold = 7;
     double brakingOffset = 0;
-    int tick_increment = 305;
+    int tick_increment = 300;
     int tick_threshold = tick_increment;
     float ir1reading, ir2reading, ir3reading;
 
@@ -195,21 +195,30 @@ int glideforwardtillwall_exp()
         ir2reading = readIR2(); //taking reading
         ir3reading = readIR3(); //taking reading
         if(ir1reading < threshold || ir2reading < threshold ||(ir3reading < threshold && ir3reading > 0)){
+          if (m1Ticks >= tick_threshold)
+          {
+            Serial.println("X"
+                   + String(readIR4()) + ";"
+                   + String(readIR6())
+                  );
+          }
           break;
         }
 
     }
-
-    if ((m1Ticks % tick_increment) > (tick_increment/2.0))
+    Serial.println(m1Ticks);
+    md.setBrakes(400, 400);
+    if ((m1Ticks % tick_increment) > (tick_increment * 0.7))
     {
       // Have not sent sensor data for the last 10cm
+     
       Serial.println("X"
              + String(readIR4()) + ";"
              + String(readIR6())
             );
     }
+     
     
-    md.setBrakes(400, 400);
     delay(20);
     return 1;
 }
