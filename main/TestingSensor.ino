@@ -16,10 +16,10 @@ void loopSensorTest(){
 
 
   for(i=0; i<200; i++){
-    arr[i] = analogRead(irR4);
+    arr[i] = analogRead(irR2);
   }
   middle = median(arr, 200);
-  Serial.print("4: ");
+  Serial.print("2: ");
   Serial.println(middle);
 
   for(i=0; i<200; i++){

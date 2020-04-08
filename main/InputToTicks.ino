@@ -6,7 +6,7 @@ double convertDistanceToTicks(int distance) //10cm
   if (distance == 10)
      return 300;
   else
-     return distance * (29.7 + distance/200);
+     return distance * (29.7 + distance/150);
   
 }
 
@@ -26,7 +26,7 @@ double convertRightAngleToTicks(int angle) //convertLeftAngleToTicks(int angle) 
   if(angle == 45){
     return 198;
   } else if (angle == 90){
-    return 400;  
+    return 402;  
   } else if (angle == 135){
     return 610;  
   } else if (angle == 180){

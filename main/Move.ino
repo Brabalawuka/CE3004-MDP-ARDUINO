@@ -204,7 +204,7 @@ int glideforwardtillwall_exp()
     double p = 0;
     double threshold = 7;
     double brakingOffset = 0;
-    int tick_increment = 300;
+    int tick_increment = 301;
     int tick_threshold = tick_increment;
     float ir1reading, ir2reading, ir3reading;
 
