@@ -1,7 +1,7 @@
 int move(double ticks, const int direction[2], const bool slow) 
 {
     resetGlobalConstants();
-    double p = 0;
+    double i = 0;
     double brakingOffset = 0;
     int startingOffset = 0;
     double base_speedL, base_speedR;
@@ -18,7 +18,7 @@ int move(double ticks, const int direction[2], const bool slow)
 
     while (m1Ticks <= ticks && m2Ticks <= ticks)
     {   
-        p = computeP();
+        i = computeI();
 
         double difference = ticks - m1Ticks;
         double speedL, speedR;
@@ -31,12 +31,12 @@ int move(double ticks, const int direction[2], const bool slow)
         else if ( difference < 100 && !slow) 
         {
           brakingOffset = difference / 125 + 0.2;
-          speedL = (base_speedL * brakingOffset + p + 7) * direction[0];
-          speedR = (base_speedR * brakingOffset - p) * direction[1];
+          speedL = (base_speedL * brakingOffset + i + 7) * direction[0];
+          speedR = (base_speedR * brakingOffset - i) * direction[1];
           md.setSpeeds(speedL , speedR);
         } else {
-          speedL = (base_speedL + p + 7) * direction[0];
-          speedR = (base_speedR - p) * direction[1];
+          speedL = (base_speedL + i + 7) * direction[0];
+          speedR = (base_speedR - i) * direction[1];
           md.setSpeeds(speedL , speedR);
         }
         

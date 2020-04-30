@@ -14,7 +14,7 @@ double convertDiagDistanceToTicks(int distance) //10cm
 {
   // calculation was made with the knowledge that one revolution of the wheel is 510 ticks, and the diameter of the wheel is 6cm.
   // https://www.robotc.net/wikiarchive/Tutorials/Arduino_Projects/Mobile_Robotics/VEX/Using_encoders_to_drive_some_distance
-  double ticks = distance * 1.41421 * (29.2 + distance* 1.41421/90 * 1);   
+  double ticks = distance * 1.41421 * (29.7 + distance* 1.41421/90 * 1);   
   return ticks;
 }
 

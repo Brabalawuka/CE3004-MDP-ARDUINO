@@ -4,19 +4,19 @@ const double KD = 0.1;
 
 double last_error_to_wall = 0;
 
-double computeP() {   //Proportional only 
-  double p, error;   
+double computeI() {   //Proportional only 
+  double i, error;   
   error = m1Ticks - m2Ticks;
 //  Serial.print("Error is ");
 //  Serial.println(error);
 
-  p = KP * error;
+  i = KI * error;
 
   //Return P that is within 50<-->-50range
-  p = max(p, -50);
-  p = min(p, 50);
+  i = max(i, -50);
+  i = min(i, 50);
   
-  return p;
+  return i;
 }
 
 double computeir4P() {   //Proportional only, use ir4 as error

@@ -75,7 +75,7 @@ void caliFront() //check if it is parallel to my front wall using sensors (IR2 &
   caliFrontAlignment();
 
   caliDistance();
-  caliFrontAlignment();
+   
 }
 
 
